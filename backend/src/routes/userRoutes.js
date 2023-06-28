@@ -9,8 +9,9 @@
 const express = require("express");
 const router = express.Router();
 const userController = require('./../controllers/userController');
+const authController = require('./../controllers/authenticationController');
 
-router.param('id', userController.checkID);
+router.post('/signup', authController.signup);
 
 // get all users, create a user
 router

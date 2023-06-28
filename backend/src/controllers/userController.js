@@ -63,7 +63,6 @@ exports.getAllUsers = (req, res) => {
         data: {
             usersLength: usersData.length,
             users: usersData
-
         }
     });
 };
