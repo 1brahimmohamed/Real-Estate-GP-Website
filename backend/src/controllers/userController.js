@@ -1,72 +1,22 @@
-const usersData = [
-    {
-        id: 1,
-        name: 'User 1',
-        email: '',
-        password: '',
-        image: 'https://via.placeholder.com/150'
-    },
-    {
-        id: 2,
-        name: 'User 2',
-        email: '',
-        password: '',
-        image: 'https://via.placeholder.com/150'
-    },
-    {
-        id: 3,
-        name: 'User 3',
-        email: '',
-        password: '',
-        image: 'https://via.placeholder.com/150'
-    },
-    {
-        id: 4,
-        name: 'User 4',
-        email: '',
-        password: '',
-        image: 'https://via.placeholder.com/150'
-    },
-    {
-        id: 5,
-        name: 'User 5',
-        email: '',
-        password: '',
-        image: 'https://via.placeholder.com/150'
-    }
-];
+const User = require('../models/userModel');
+const asyncErrorCatching = require('../utils/asyncErrorCatching');
+const ErrorHandler = require('../utils/errorHandler');
 
-exports.checkID = (req, res, next, val) => {
-    console.log(`User id is: ${val}`);
-    if (req.params.id * 1 > usersData.length) {
-        return res.status(404).json({
-            status: 'fail',
-            message: 'Invalid ID'
-        });
-    }
-    next();
-};
+exports.getAllUsers = asyncErrorCatching(async (req, res, next) => {
+    // Execute the query
+    const users = await User.find();
 
-exports.checkBody = (req, res, next) => {
-    if (!req.body.name || !req.body.description) {
-        return res.status(400).json({
-            status: 'fail',
-            message: 'Missing name or description'
-        });
-    }
-    next();
-};
-
-exports.getAllUsers = (req, res) => {
+    // Send response
     res.status(200).json({
         status: 'success',
+        results: users.length,
         data: {
-            usersLength: usersData.length,
-            users: usersData
+            users
         }
     });
-};
-exports.getUser = (req, res) => {
+});
+
+exports.getUser = asyncErrorCatching(async (req, res, next) => {
     const id = parseInt(req.params.id);
     const user = usersData.find(user => user.id === id);
 
@@ -76,22 +26,25 @@ exports.getUser = (req, res) => {
             user
         }
     });
-};
-exports.updateUser = (req, res) => {
+});
+
+exports.updateUser = asyncErrorCatching(async (req, res, next) => {
     res.status(200).json({
         status: 'success',
         data: {
             user: '<Updated user>'
         }
     });
-}
-exports.deleteUser = (req, res) => {
+});
+
+exports.deleteUser = asyncErrorCatching(async (req, res, next) => {
     res.status(204).json({
         status: 'success',
         data: null
     });
-};
-exports.createUser = (req, res) => {
+});
+
+exports.createUser = asyncErrorCatching(async (req, res, next) => {
     console.log(req.body);
     res.send('Done');
-};
+});

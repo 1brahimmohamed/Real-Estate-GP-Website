@@ -12,12 +12,13 @@ const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authenticationController');
 
 router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 
 // get all users, create a user
 router
     .route('/')
     .get(userController.getAllUsers)
-    .post(userController.checkBody, userController.createUser);
+    .post(userController.createUser);
 
 // get user, update user, delete user
 router
