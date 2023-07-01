@@ -48,6 +48,22 @@ const handleValidationErrorDB = err => {
 
 
 /**
+* function: handleJWTError
+* @returns {ErrorHandler}
+* @description: This function handles the invalidJWT error
+*/
+const handleJWTError = __ => new ErrorHandler("Invalid token, please log in again!", 401);
+
+
+/**
+ * function: handleJWTExpiredError
+ * @returns {ErrorHandler}
+ * @description: This function handles the expired JWT error
+ */
+const handleJWTExpiredError = __ => new ErrorHandler("Your session has expired, please log in again!", 401);
+
+
+/**
  * function: sendErrorDev
  * @param err
  * @param res
@@ -103,9 +119,12 @@ module.exports = (err, req, res, next) => {
 
     else if (process.env.NODE_ENV === 'production'){
         let error = {...err};
+
         if (error.kind === 'ObjectId')              error = handleCastErrorDB(error);
         if (error.code === 11000)                   error = handleDuplicateFieldsDB(error);
         if (error._message === 'Validation failed') error = handleValidationErrorDB(error);
+        if (error.name === 'JsonWebTokenError')     error = handleJWTError(error);
+        if (error.name === 'TokenExpiredError')     error = handleJWTExpiredError();
 
         sendErrorProd(error, res)
     }

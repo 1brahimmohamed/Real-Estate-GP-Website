@@ -9,12 +9,12 @@
 const express = require("express");
 const router = express.Router();
 const propertyController = require('./../controllers/propertyController');
-
+const authenticationController = require('./../controllers/authenticationController');
 
 // get all properties, create a property
 router
     .route('/')
-    .get(propertyController.getAllProperties)
+    .get(authenticationController.protect, propertyController.getAllProperties)
     .post(propertyController.createProperty);
 
 // get property stats
