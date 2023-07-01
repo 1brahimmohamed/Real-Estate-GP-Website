@@ -14,18 +14,38 @@ const authController = require('./../controllers/authenticationController');
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
+router.post('/forgotPassword', authController.forgotPassword);
+router.patch('/resetPassword/:token', authController.resetPassword);
+
+router.patch(
+    '/updatePassword',
+    authController.protect,
+    authController.updatePassword
+);
+
 // get all users, create a user
 router
     .route('/')
-    .get(userController.getAllUsers)
+    .get(
+        authController.protect,
+        authController.restrictTo('admin'),
+        userController.getAllUsers
+    )
     .post(userController.createUser);
 
 // get user, update user, delete user
 router
     .route('/:id')
     .get(userController.getUser)
-    .patch(userController.updateUser)
-    .delete(userController.deleteUser);
+    .patch(
+        authController.protect,
+        userController.updateUser
+    )
+    .delete(
+        authController.protect,
+        authController.restrictTo('admin'),
+        userController.deleteUser
+    );
 
 // export the router
 module.exports = router;

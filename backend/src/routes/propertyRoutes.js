@@ -14,20 +14,36 @@ const authenticationController = require('./../controllers/authenticationControl
 // get all properties, create a property
 router
     .route('/')
-    .get(authenticationController.protect, propertyController.getAllProperties)
-    .post(propertyController.createProperty);
+    .get(propertyController.getAllProperties)
+    .post(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        propertyController.createProperty
+    );
 
 // get property stats
 router
     .route('/propertyStats')
-    .get(propertyController.getPropertyStats);
+    .get(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        propertyController.getPropertyStats
+    );
 
 // get property, update property, delete property
 router
     .route('/:id')
     .get(propertyController.getProperty)
-    .patch(propertyController.updateProperty)
-    .delete(propertyController.deleteProperty);
+    .patch(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        propertyController.updateProperty
+    )
+    .delete(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        propertyController.deleteProperty
+    );
 
 
 // export the router
