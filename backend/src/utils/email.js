@@ -1,7 +1,15 @@
+/************************************************************************************
+ *
+ * File Name  : email.js
+ * Description: This file contains the email function which is used to send emails
+ * Author     : Ibrahim Mohamed
+ *
+ ************************************************************************************/
+
 const nodemailer = require('nodemailer');
 
 const sendEmail = async options => {
-// 1) Create a transporter
+    // Create a transporter
     const transporter = nodemailer.createTransport({
         host: process.env.EMAIL_HOST,
         port: process.env.EMAIL_PORT,
@@ -19,7 +27,7 @@ const sendEmail = async options => {
         text: options.message
     };
 
-    // 3) Actually send the email
+    // Actually send the email
     await transporter.sendMail(mailOptions);
 }
 

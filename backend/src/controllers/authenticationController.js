@@ -5,13 +5,27 @@ const ErrorHandler = require('../utils/errorHandler');
 const sendEmail = require('../utils/email');
 const crypto = require('crypto');
 
-
+/**
+ * @name signToken
+ * @param id
+ * @returns {jwt signed token}
+ * @description This function signs a jwt token
+ */
 const signToken = id => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
 }
 
+
+/**
+ * @name createSendToken
+ * @param user
+ * @param statusCode
+ * @param res
+ * @returns {jwt token}
+ * @description This function creates and sends a jwt token
+ */
 const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
 
@@ -37,6 +51,15 @@ const createSendToken = (user, statusCode, res) => {
     });
 };
 
+/**
+ * @name signup
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ * @description This function signs up a user
+ * @type {(function(*, *, *): void)|*}
+ */
 exports.signup = asyncErrorCatching(async (req, res) => {
     // const newUser = await User.create({
     //     name: req.body.name,
@@ -49,6 +72,15 @@ exports.signup = asyncErrorCatching(async (req, res) => {
     createSendToken(newUser, 201, res);
 });
 
+/**
+ * @name login
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ * @description This function logs in a user
+ * @type {(function(*, *, *): void)|*}
+ */
 exports.login = asyncErrorCatching(async (req, res, next) => {
     const { email, password } = req.body;
 
@@ -68,6 +100,15 @@ exports.login = asyncErrorCatching(async (req, res, next) => {
    createSendToken(user, 200, res);
 });
 
+/**
+ * @name protect
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ * @description This function protects a route ensuring that only logged in users can access it
+ * @type {(function(*, *, *): void)|*}
+ */
 exports.protect = asyncErrorCatching(async (req, res, next) => {
     let token;
 
@@ -113,6 +154,12 @@ exports.protect = asyncErrorCatching(async (req, res, next) => {
     next();
 })
 
+/**
+ * @name restrictTo
+ * @param roles
+ * @returns {(function(*, *, *): (*|undefined))|*}
+ * @description This function restricts access to a route based on the user's role
+ */
 exports.restrictTo = (...roles) => {
     return (req, res, next) => {
         if (!roles.includes(req.user.role)) {
@@ -128,6 +175,15 @@ exports.restrictTo = (...roles) => {
     }
 };
 
+/**
+ * @name forgotPassword
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ * @description This function sends a reset token to a user's email
+ * @type {(function(*, *, *): void)|*}
+ */
 exports.forgotPassword = asyncErrorCatching(async (req, res, next) => {
     const user = await User.findOne({ email: req.body.email });
 
@@ -176,6 +232,15 @@ exports.forgotPassword = asyncErrorCatching(async (req, res, next) => {
     // }
 });
 
+/**
+ * @name resetPassword
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ * @description This function resets a user's password
+ * @type {(function(*, *, *): void)|*}
+ */
 exports.resetPassword = asyncErrorCatching(async (req, res, next) => {
     // 1) Get user based on the token
     const hashedToken = crypto
@@ -203,6 +268,15 @@ exports.resetPassword = asyncErrorCatching(async (req, res, next) => {
     createSendToken(user, 200, res);
 });
 
+/**
+ * @name updatePassword
+ * @param req
+ * @param res
+ * @param next
+ * @returns {Promise<void>}
+ * @description This function updates a user's password
+ * @type {(function(*, *, *): void)|*}
+ */
 exports.updatePassword = asyncErrorCatching(async (req, res, next) => {
     // Get user from collection
     const user = await User.findById(req.user.id).select('+password');
