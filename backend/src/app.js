@@ -17,6 +17,7 @@ const hpp = require('hpp');
 
 const propertyRouter = require('./routes/propertyRoutes');
 const userRouter = require('./routes/userRoutes');
+const reviewRouter = require('./routes/reviewRoutes');
 
 const globalErrorHandler = require('./controllers/errorController');
 const ErrorHandler = require('./utils/errorHandler');
@@ -69,6 +70,8 @@ app.use(express.static(`${__dirname}/public`));
 // ------------------------------------------   Routes  ------------------------------------------//
 app.use('/api/v1/properties', propertyRouter);
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/reviews', reviewRouter);
+
 
 // error handling for unhandled routes
 app.all('*', (req, res, next) => {
