@@ -84,7 +84,13 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: ['male', 'female'],
-    }
+    },
+
+    active: {
+        type: Boolean,
+        default: true,
+        select: false
+    },
 
 }, {
     toJSON: {virtuals: true},
@@ -109,6 +115,13 @@ userSchema.pre('save', function (next) {
 
     // -1000 is to make sure the token is created after the password is changed
     this.passwordChangedAt = Date.now() - 1000;
+    next();
+});
+
+
+userSchema.pre(/^find/, function (next) {
+    // this points to the current query
+    this.find({active: {$ne: false}});
     next();
 });
 

@@ -75,6 +75,11 @@ const propertySchema = new mongoose.Schema({
         required: [true, 'A property must have a number of rooms'],
     },
 
+    bathrooms: {
+        type: Number,
+        required: [true, 'A property must have a number of bathrooms'],
+    },
+
     floor: {
         type: Number,
     },
