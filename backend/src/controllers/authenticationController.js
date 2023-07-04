@@ -125,6 +125,7 @@ exports.protect = asyncErrorCatching(async (req, res, next) => {
 
     // Verify the token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
     console.log(decoded);
 
     // Check if user still exists
@@ -278,6 +279,7 @@ exports.resetPassword = asyncErrorCatching(async (req, res, next) => {
  * @type {(function(*, *, *): void)|*}
  */
 exports.updatePassword = asyncErrorCatching(async (req, res, next) => {
+
     // Get user from collection
     const user = await User.findById(req.user.id).select('+password');
 
