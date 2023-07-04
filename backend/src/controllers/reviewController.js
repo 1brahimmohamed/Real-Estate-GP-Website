@@ -62,3 +62,29 @@ exports.deleteReview = asyncErrorCatching(async (req, res, next) => {
     });
 });
 
+exports.getUserReviews = asyncErrorCatching(async (req, res, next) => {
+
+    console.log(req.user.id)
+    const reviews = await Review.find({ user: req.user.id });
+
+    res.status(200).json({
+        status: 'success',
+        results: reviews.length,
+        data: {
+            reviews
+        }
+    });
+});
+
+
+exports.getPropertyReviews = asyncErrorCatching(async (req, res, next) => {
+    const reviews = await Review.find({ property: req.params.id });
+
+    res.status(200).json({
+        status: 'success',
+        results: reviews.length,
+        data: {
+            reviews
+        }
+    });
+});
