@@ -3,12 +3,12 @@ const moongose = require('mongoose');
 const InquirySchema = new moongose.Schema({
     property: {
         type: moongose.Schema.ObjectId,
-        ref: 'property',
+        ref: 'Property',
         required: [true, 'Inquiry must belong to a property']
     },
     user: {
         type: moongose.Schema.ObjectId,
-        ref: 'user',
+        ref: 'User',
         required: [true, 'Inquiry must belong to a user']
     },
 
@@ -19,6 +19,7 @@ const InquirySchema = new moongose.Schema({
     status: {
         type: String,
         enum: ['pending', 'resolved', 'rejected'],
+        default: 'pending'
     },
 
     createdAt: {
