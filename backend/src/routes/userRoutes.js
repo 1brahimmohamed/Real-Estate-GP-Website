@@ -15,11 +15,13 @@ const authController = require('./../controllers/authenticationController');
 
 // ------------------------------------------   User Operations done by user ------------------------------ //
 
+
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 
 router.post('/forgotPassword', authController.forgotPassword);
 router.patch('/resetPassword/:token', authController.resetPassword);
+
 
 // update user data
 router.patch(
@@ -42,6 +44,17 @@ router.patch(
     authController.updatePassword
 );
 
+router.patch(
+    '/addToWishlist/:id',
+    authController.protect,
+    userController.addToWishlist
+);
+
+router.patch(
+    '/removeFromWishlist/:id',
+    authController.protect,
+    userController.removeFromWishlist
+);
 // ------------------------------------------   User Operations done by admin ------------------------------ //
 
 // get all users, create a user
@@ -72,6 +85,8 @@ router
         authController.restrictTo('admin'),
         userController.deleteUser
     );
+
+
 
 // export the router
 module.exports = router;
