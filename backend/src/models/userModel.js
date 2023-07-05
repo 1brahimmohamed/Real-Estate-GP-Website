@@ -97,6 +97,13 @@ const userSchema = new mongoose.Schema({
         select: false
     },
 
+    savedProperties: [
+        {
+            type: mongoose.Schema.ObjectId,
+            ref: 'Property'
+        }
+    ],
+
 }, {
     toJSON: {virtuals: true},
     toObject: {virtuals: true}
@@ -129,10 +136,26 @@ userSchema.pre('save', function (next) {
     next();
 });
 
+userSchema.pre('save', function (next) {
+    this.populate({
+        path: 'savedProperties',
+        select: 'name'
+    })
+    next();
+});
+
 // QUERY MIDDLEWARE: runs before any .find() query
 userSchema.pre(/^find/, function (next) {
     // this points to the current query
     this.find({active: {$ne: false}});
+    next();
+});
+
+userSchema.pre(/^find/, function (next) {
+    this.populate({
+        path: 'savedProperties',
+        select: 'name'
+    })
     next();
 });
 

@@ -197,3 +197,103 @@ exports.deleteMe = asyncErrorCatching(async (req, res, next) => {
         data: null
     });
 });
+
+
+exports.addToWishlist = asyncErrorCatching(async (req, res, next) => {
+
+    let user = await User.findById(req.user.id);
+    let property = await Property.findById(req.params.id);
+
+    if (!user) {
+        return next(
+            new ErrorHandler(
+                'No user found with that ID',
+                404
+            )
+        );
+    }
+
+    if (!property) {
+        return next(
+            new ErrorHandler(
+                'No property found with that ID',
+                404
+            )
+        );
+    }
+
+    const propertyExists = user.savedProperties.some(
+        (savedProperty) => property._id.toString() === savedProperty._id.toString()
+    );
+
+    if (propertyExists) {
+        return next(
+            new ErrorHandler(
+                'Property already in wishlist',
+                400
+            )
+        );
+    }
+
+    user.savedProperties.push(property._id);
+
+    await user.save({validateBeforeSave: false});
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            user
+        },
+        message: 'Property added to wish list'
+    });
+});
+
+exports.removeFromWishlist = asyncErrorCatching(async (req, res, next) => {
+
+    let user = await User.findById(req.user.id);
+    let property = await Property.findById(req.params.id);
+
+    if (!user) {
+        return next(
+            new ErrorHandler(
+                'No user found with that ID',
+                404
+            )
+        );
+    }
+
+    if (!property) {
+        return next(
+            new ErrorHandler(
+                'No property found with that ID',
+                404
+            )
+        );
+    }
+
+
+    const propertyExists = user.savedProperties.some(
+        (savedProperty) => property._id.toString() === savedProperty._id.toString()
+    );
+
+
+    if (!propertyExists) {
+        return next(
+            new ErrorHandler(
+                'Property not in wishlist',
+                400
+            )
+        );
+    }
+
+    user.savedProperties.splice(user.savedProperties.indexOf(property._id), 1);
+    await user.save({validateBeforeSave: false});
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            user
+        },
+        message: 'Property removed from wish list'
+    });
+});
