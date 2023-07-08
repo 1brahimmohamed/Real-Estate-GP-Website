@@ -2,6 +2,8 @@ const Property = require('../models/propertyModel');
 const asyncErrorCatching = require('../utils/asyncErrorCatching');
 const fs = require('fs');
 const path = require('path');
+const axios = require('axios');
+const APIOperations = require("../utils/apiOperations");
 
 
 const aboutUsSection = fs.readFileSync(path.join(__dirname, '../data/about.json'), 'utf-8');
@@ -11,9 +13,14 @@ const jsonAboutUsSection = JSON.parse(aboutUsSection);
 const jsonCommonData = JSON.parse(commonData);
 
 
-exports.getHomePage = asyncErrorCatching(async(req, res) => {
+const getPopularProperties = async (sortQuan,limit) => {
+    return Property.find().sort(sortQuan).limit(limit);
+};
 
-    const properties = await Property.find();
+
+
+exports.getHomePage = asyncErrorCatching(async (req, res) => {
+
 
     res
         .status(200)
@@ -22,25 +29,71 @@ exports.getHomePage = asyncErrorCatching(async(req, res) => {
             {
                 pageTitle: `${jsonCommonData.pageTitlesBase} | Home`,
                 commonData: jsonCommonData,
-                properties,
+                properties: await getPopularProperties('createdAt',6),
                 aboutUs: jsonAboutUsSection
             }
         );
+
+
 });
 
-exports.getPropertyPage = asyncErrorCatching(async(req, res) => {
+exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
+
+    req.query.limit = req.query.limit || 6;
+    req.query.page = req.query.page || 1;
+    req.query.sort = req.query.sort || '-createdAt';
+
+    console.log(req.query)
+
+    // Do the filtering, sorting, limiting and pagination
+    const operations = new APIOperations(Property.find(), req.query)
+        .filter()
+        .sort()
+        .limitFields()
+        .paginate();
+
+
+    // Execute the query
+    const properties = await operations.query;
+    const popularProperties = await getPopularProperties('ratingQuantity',3);
+
+    let activePage = parseInt(req.query.page) || 1;
+    let limitedPages = parseInt(req.query.limit) || 6;
+    let selectedOption = req.query.sort || '';
+
     res
         .status(200)
         .render(
             'website/properties',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Property`,
+                pageTitle: `${jsonCommonData.pageTitlesBase} | Properties`,
                 commonData: jsonCommonData,
+                properties,
+                popularProperties,
+                activePage,
+                limitedPages,
+                selectedOption,
             }
         );
 })
 
-exports.getSignupPage = asyncErrorCatching(async(req, res) => {
+exports.getPropertyPage = asyncErrorCatching(async (req, res) => {
+
+    const property = await Property.findOne({slug: req.params.slug});
+    console.log(property)
+    res
+        .status(200)
+        .render(
+            'website/property',
+            {
+                pageTitle: `${jsonCommonData.pageTitlesBase} | Property`,
+                property,
+                commonData: jsonCommonData,
+            }
+        );
+});
+
+exports.getSignupPage = asyncErrorCatching(async (req, res) => {
     res
         .status(200)
         .render(
@@ -53,7 +106,7 @@ exports.getSignupPage = asyncErrorCatching(async(req, res) => {
         );
 })
 
-exports.getLoginPage = asyncErrorCatching(async(req, res) => {
+exports.getLoginPage = asyncErrorCatching(async (req, res) => {
     res
         .status(200)
         .render(
@@ -66,7 +119,7 @@ exports.getLoginPage = asyncErrorCatching(async(req, res) => {
         );
 });
 
-exports.getContactPage = asyncErrorCatching(async(req, res) => {
+exports.getContactPage = asyncErrorCatching(async (req, res) => {
     res
         .status(200)
         .render(
@@ -78,7 +131,7 @@ exports.getContactPage = asyncErrorCatching(async(req, res) => {
         );
 });
 
-exports.getGalleryPage = asyncErrorCatching(async(req, res) => {
+exports.getGalleryPage = asyncErrorCatching(async (req, res) => {
     res
         .status(200)
         .render(
