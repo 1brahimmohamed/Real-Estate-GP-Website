@@ -6,12 +6,9 @@ const limitElements = document.getElementById('limit');
 // let selectedPage = 1;
 // let sortBy = document.getElementById('sort').value;
 
-let limit = document.getElementById('limitedPageVal').innerText;
-let selectedPage = document.getElementById('activePageVal').innerText;
-let sortBy =  document.getElementById('selectedOptionVal').innerText;
-
-limit = parseInt(limit);
-selectedPage = parseInt(selectedPage);
+let limit = parseInt(document.getElementById('limitedPageVal').innerText);
+let selectedPage = parseInt(document.getElementById('activePageVal').innerText);
+let sortBy =  parseInt(document.getElementById('selectedOptionVal').innerText);
 
 paginationLinks.forEach(link => {
     link.addEventListener('click', event => {
