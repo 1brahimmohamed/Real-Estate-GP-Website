@@ -75,6 +75,16 @@ const propertySchema = new mongoose.Schema({
         required: [true, 'A property must have a number of rooms'],
     },
 
+    balconies: {
+        type: Number,
+        required: [true, 'A property must have a number of balaconies'],
+    },
+
+    squareMeters: {
+        type: Number,
+        required: [true, 'A property must have a number of square meters'],
+    },
+
     bathrooms: {
         type: Number,
         required: [true, 'A property must have a number of bathrooms'],
@@ -87,6 +97,7 @@ const propertySchema = new mongoose.Schema({
     duplex: {
         type: Boolean,
     },
+
     description: {
         type: String,
         trim: true,
