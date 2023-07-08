@@ -19,11 +19,20 @@ const propertyRouter = require('./routes/propertyRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const inquiryRouter = require('./routes/inquiryRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const globalErrorHandler = require('./controllers/errorController');
 const ErrorHandler = require('./utils/errorHandler');
 
+
 const app = express();
+
+// views
+app.set('view engine', 'ejs');
+app.set('views', `${__dirname}/views`);
+
+// serving static files
+app.use(express.static(`${__dirname}/public`));
 
 
 // ------------------------------------------   Middlewares  ------------------------------------------//
@@ -64,11 +73,9 @@ app.use(hpp({
     ]
 }));
 
-// serving static files
-app.use(express.static(`${__dirname}/public`));
-
 
 // ------------------------------------------   Routes  ------------------------------------------//
+app.use('/', viewRouter);
 app.use('/api/v1/properties', propertyRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);

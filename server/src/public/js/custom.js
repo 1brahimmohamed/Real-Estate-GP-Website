@@ -189,7 +189,7 @@ jQuery(function($){
        var skipSlider = document.getElementById('aa-sqrfeet-range');
         noUiSlider.create(skipSlider, {
             range: {
-              'min': 0,
+              'min': 50,
               '10%': 100,
               '20%': 200,
               '30%': 300,
@@ -212,7 +212,7 @@ jQuery(function($){
         ];
 
         skipSlider.noUiSlider.on('update', function( values, handle ) {
-          skipValues[handle].innerHTML = values[handle];
+          skipValues[handle].innerHTML = values[handle] + ' Sq Meter';
         });
 
         // FOR PRICE SECTION
@@ -220,21 +220,21 @@ jQuery(function($){
         var skipSlider2 = document.getElementById('aa-price-range');
         noUiSlider.create(skipSlider2, {
             range: {
-                'min': 0,
-                '10%': 100,
-                '20%': 200,
-                '30%': 300,
-                '40%': 400,
-                '50%': 500,
-                '60%': 600,
-                '70%': 700,
-                '80%': 800,
-                '90%': 900,
-                'max': 1000
+                'min': 50000,
+                '10%': 100000,
+                '20%': 250000,
+                '30%': 500000,
+                '40%': 1000000,
+                '50%': 2000000,
+                '60%': 3000000,
+                '70%': 4000000,
+                '80%': 5000000,
+                '90%': 7000000,
+                'max': 10000000,
             },
             snap: true,
             connect: true,
-            start: [200, 700]
+            start: [250000, 5000000]
         });
         // for value print
         var skipValues2 = [
@@ -243,7 +243,7 @@ jQuery(function($){
         ];
 
         skipSlider2.noUiSlider.on('update', function( values, handle ) {
-          skipValues2[handle].innerHTML = values[handle];
+          skipValues2[handle].innerHTML = values[handle] + ' EGP';
         });
       }
     });
