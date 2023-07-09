@@ -14,6 +14,11 @@ const MessageSchema = new moongose.Schema({
         required: [true, 'Message must have an email']
     },
 
+    subject: {
+        type: String,
+        default: 'No subject'
+    },
+
     message: {
         type: String,
         required: [true, 'Message must have a message']

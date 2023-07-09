@@ -8,9 +8,20 @@ form.addEventListener('submit', async (e) => {
     const subjectInput = form.elements['subject'] || 'No subject'
     const messageInput = form.elements['comment'];
 
-    if (!nameInput.value || !emailInput.value || !messageInput.value) {
-        // Add error handling or display error messages to the user
-        console.log('Please fill in all required fields');
-    }
+
+    await fetch('/api/v1/messages', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            user: nameInput.value,
+            email: emailInput.value,
+            subject: subjectInput.value,
+            message: messageInput.value
+        }),
+    }).then(response => response.json()).then(data => {
+        console.log(data);
+    });
 
 });
