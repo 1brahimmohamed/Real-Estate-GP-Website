@@ -15,5 +15,6 @@ searchBtn.addEventListener('click', (evt) => {
 
     console.log(category, location, duplex, lowerPrice, upperPrice, lowerArea, upperArea)
     window.location.href = `http://localhost:3000/properties/?type=${category}&city=${location}&duplex=${duplex}&price[gte]=${lowerPrice}&price[lte]=${upperPrice}&squareMeters[gte]=${lowerArea}&squareMeters[lte]=${upperArea}`;
+
 });
 

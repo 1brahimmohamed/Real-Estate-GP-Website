@@ -255,63 +255,24 @@
             </div>           
           </div>
         </div>
+
+
+
+
         <!-- Start properties sidebar -->
         <div class="col-md-4">
           <aside class="aa-properties-sidebar">
             <!-- Start Single properties sidebar -->
             <div class="aa-properties-single-sidebar">
-              <h3>Properties Search</h3>
-              <form action="">
+              <h3>Request More Property Details</h3>
+              <h5>Send Us an inquiry request and we will call you</h5>
+              <span id="property-id" style="display: none"><%- property._id%></span>
+              <form action="" id="inquiry-form">
                 <div class="aa-single-advance-search">
-                  <input type="text" placeholder="Type Your Location">
-                </div>
-                <div class="aa-single-advance-search">
-                  <select id="" name="">
-                   <option selected="" value="0">Category</option>
-                    <option value="1">Flat</option>
-                    <option value="2">Land</option>
-                    <option value="3">Plot</option>
-                    <option value="4">Commercial</option>
-                  </select>
+                  <input name="message" type="text" placeholder="Type Your Message" style="height: 200px; font-size: 14px">
                 </div>
                 <div class="aa-single-advance-search">
-                  <select id="" name="">
-                    <option selected="" value="0">Type</option>
-                    <option value="1">Flat</option>
-                    <option value="2">Land</option>
-                    <option value="3">Plot</option>
-                    <option value="4">Commercial</option>
-                  </select>
-                </div>
-                <div class="aa-single-advance-search">
-                  <select id="" name="">
-                    <option selected="" value="0">Type</option>
-                    <option value="1">Flat</option>
-                    <option value="2">Land</option>
-                    <option value="3">Plot</option>
-                    <option value="4">Commercial</option>
-                  </select>
-                </div>
-                <div class="aa-single-filter-search">
-                  <span>AREA (SQ)</span>
-                  <span>FROM</span>
-                  <span id="skip-value-lower" class="example-val">30.00</span>
-                  <span>TO</span>
-                  <span id="skip-value-upper" class="example-val">100.00</span>
-                  <div id="aa-sqrfeet-range" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
-                  </div>                  
-                </div>
-                <div class="aa-single-filter-search">
-                  <span>PRICE ($)</span>
-                  <span>FROM</span>
-                  <span id="skip-value-lower2" class="example-val">30.00</span>
-                  <span>TO</span>
-                  <span id="skip-value-upper2" class="example-val">100.00</span>
-                  <div id="aa-price-range" class="noUi-target noUi-ltr noUi-horizontal noUi-background">
-                  </div>      
-                </div>
-                <div class="aa-single-advance-search">
-                  <input type="submit" value="Search" class="aa-search-btn">
+                  <input type="submit" value="Inquire about this property" class="aa-search-btn" id="inquiry-btn">
                 </div>
               </form>
             </div> 
@@ -396,5 +357,6 @@
   <script src="/js/custom.js"></script>
   <!-- Navigation logo -->
   <script type="text/javascript" src="/js/navimage.js"></script>
+  <script type="text/javascript" src="/js/inquiryForm.js"></script>
   </body>
 </html>

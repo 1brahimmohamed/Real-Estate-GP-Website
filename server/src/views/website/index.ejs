@@ -165,33 +165,32 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div class="aa-single-advance-search">
-                                <input type="text" placeholder="Type Your Location">
+                                <input id="location" type="text" placeholder="Type Your Location">
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="aa-single-advance-search">
-                                <select>
-                                    <option value="0" selected>Floor Type</option>
-                                    <option value="1">Normal</option>
-                                    <option value="2">Duplex</option>
-
+                                <select id="category">
+                                    <option selected="" value="0">Category</option>
+                                    <option value="apartment">Apartment</option>
+                                    <option value="house">House</option>
+                                    <option value="office">Office</option>
+                                    <option value="villa">Villa</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="aa-single-advance-search">
-                                <select>
-                                    <option value="0" selected>Category</option>
-                                    <option value="1">Apartment</option>
-                                    <option value="2">Villa</option>
-                                    <option value="3">House</option>
-                                    <option value="4">Office</option>
+                                <select id="duplexType" name="">
+                                    <option selected="" value="0">Type</option>
+                                    <option value="false">Normal</option>
+                                    <option value="true">Duplex</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-2">
                             <div class="aa-single-advance-search">
-                                <select>
+                                <select id="">
                                     <option value="0" selected>Type</option>
                                     <option value="1">Flat</option>
                                     <option value="2">Land</option>
@@ -202,7 +201,7 @@
                         </div>
                         <div class="col-md-2">
                             <div class="aa-single-advance-search">
-                                <input class="aa-search-btn" type="submit" value="Search">
+                                <input class="aa-search-btn" type="submit" value="Search" id="searchBtn">
                             </div>
                         </div>
                     </div>
@@ -222,7 +221,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="aa-single-filter-search">
-                                <span>PRICE ($)</span>
+                                <span>PRICE (EGP)</span>
                                 <span>FROM</span>
                                 <span id="skip-value-lower2" class="example-val">30.00</span>
                                 <span>TO</span>
@@ -858,5 +857,6 @@
 
 <!-- Navigation logo -->
 <script type="text/javascript" src="js/navimage.js"></script>
+<script type="text/javascript" src="js/searchProps.js"></script>
 </body>
 </html>
