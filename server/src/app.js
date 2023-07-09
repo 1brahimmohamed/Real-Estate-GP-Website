@@ -40,6 +40,13 @@ app.use(express.static(`${__dirname}/public`));
 // set security HTTP headers
 app.use(helmet());
 
+app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+        "img-src": ["'self'", 'https: data:', 'http:'],
+    }
+}));
+
 // limit requests from same IP
 const limiter = rateLimit({
     max: 100,

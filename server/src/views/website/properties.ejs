@@ -3,6 +3,8 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> <%= pageTitle %> </title>
 
@@ -122,7 +124,7 @@
                 <div class="aa-property-header-inner">
                     <h2>Properties Page</h2>
                     <ol class="breadcrumb">
-                        <li><a href="#">HOME</a></li>
+                        <li><a href="/">HOME</a></li>
                         <li class="active">PROPERTIES</li>
                     </ol>
                 </div>
@@ -177,11 +179,12 @@
                     <!-- Start properties content body -->
                     <div class="aa-properties-content-body">
                         <ul class="aa-properties-nav">
+
                             <% properties.forEach(property=>{ %>
                                 <li>
                                     <article class="aa-properties-item">
-                                        <a class="aa-properties-item-img" href="#">
-                                            <img alt="img" src="<%- property.images[0] %> ">
+                                        <a class="aa-properties-item-img" href="/properties/<%- property.slug%>">
+                                            <img alt="img" src="<%- property.images[0]%>?random=<%- property.counter%>">
                                         </a>
                                         <div class="aa-tag for-rent">
                                             For Rent
@@ -194,14 +197,14 @@
                                                 <span><%- property.squareMeters %> Sq Meters</span>
                                             </div>
                                             <div class="aa-properties-about">
-                                                <h3><a href="#"><%- property.name %></a></h3>
+                                                <h3><a href="/properties/<%- property.slug %>"><%- property.name %></a></h3>
                                                 <p><%- property.description %></p>
                                             </div>
                                             <div class="aa-properties-detial">
                         <span class="aa-price">
-                          <%- property.price %> EGP
+                          <%- property.price.toLocaleString() %> EGP
                         </span>
-                                                <a class="aa-secondary-btn" href="#">View Details</a>
+                                                <a class="aa-secondary-btn" href="/properties/<%- property.slug%>">View Details</a>
                                             </div>
                                         </div>
                                     </article>
@@ -278,7 +281,7 @@
                                 </div>
                             </div>
                             <div class="aa-single-filter-search">
-                                <span>PRICE (L.E)</span>
+                                <span>PRICE (EGP)</span>
                                 <span>FROM</span>
                                 <span id="skip-value-lower2" class="example-val">30.00</span>
                                 <span>TO</span>
@@ -298,14 +301,14 @@
                         <% popularProperties.forEach( (popularProp) => { %>
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#">
-                                        <img class="media-object" src="<%- popularProp.images[0]%>" alt="img">
+                                    <a href="/properties/<%- popularProp.slug %>">
+                                        <img class="media-object" src="<%- popularProp.images[0]%>?random=<%-popularProp.counter%>" alt="img">
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h4 class="media-heading"><a href="#"><%- popularProp.name%></a></h4>
+                                    <h4 class="media-heading"><a href="/properties/<%- popularProp.slug %>"><%- popularProp.name%></a></h4>
                                     <p><%- popularProp.description%></p>
-                                    <span><%- popularProp.price%> L.E</span>
+                                    <span><%- popularProp.price.toLocaleString() %> EGP</span>
                                 </div>
                             </div>
 
@@ -342,8 +345,8 @@
                         </div>
                         <div class="col-md-6 col-sm-12 col-xs-12">
                             <div class="aa-footer-right">
-                                <a href="#">Home</a>
-                                <a href="#">Support</a>
+                                <a href="/">Home</a>
+                                <a href="/contact">Support</a>
                                 <a href="#">License</a>
                                 <a href="#">FAQ</a>
                                 <a href="#">Privacy & Term</a>

@@ -132,95 +132,25 @@
         <!-- Top slider -->
         <div class="aa-top-slider">
             <!-- Top slider single slide -->
-            <div class="aa-top-slider-single">
-                <img src="/img/slider/3.jpg" alt="img">
-                <!-- Top slider content -->
-                <div class="aa-top-slider-content">
-                    <span class="aa-top-slider-catg">Duplex</span>
-                    <h2 class="aa-top-slider-title">1560 Square Feet</h2>
-                    <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i>South Beach, Miami (USA)</p>
-                    <span class="aa-top-slider-off">30% OFF</span>
-                    <p class="aa-top-slider-price">$460,000</p>
-                    <a href="#" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
+            <% properties.forEach( property =>{ %>
+
+                <div class="aa-top-slider-single">
+<!--                    <img src="/img/slider/3.jpg" alt="img">-->
+                    <img src="https://loremflickr.com/1920/1280/real-estate?random=<%- property.counter%>" alt="agent member image">
+
+                    <!-- Top slider content -->
+                    <div class="aa-top-slider-content">
+                        <span class="aa-top-slider-catg"><%- property.duplex? 'Duplex':'Normal'%></span>
+                        <h2 class="aa-top-slider-title"><%- property.squareMeters %> Square Meter</h2>
+                        <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i><%- property.area %>, <%- property.city %> (EGY)</p>
+                        <span class="aa-top-slider-off">30% OFF</span>
+                        <p class="aa-top-slider-price"><%- property.price.toLocaleString() %> EGP</p>
+                        <a href="/properties/<%- property.slug %>" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
+                    </div>
+                    <!-- / Top slider content -->
                 </div>
-                <!-- / Top slider content -->
-            </div>
-            <!-- / Top slider single slide -->
-            <!-- Top slider single slide -->
-            <div class="aa-top-slider-single">
-                <img src="/img/slider/2.jpg" alt="img">
-                <!-- Top slider content -->
-                <div class="aa-top-slider-content">
-                    <span class="aa-top-slider-catg">Duplex</span>
-                    <h2 class="aa-top-slider-title">1560 Square Feet</h2>
-                    <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i>South Beach, Miami (USA)</p>
-                    <span class="aa-top-slider-off">30% OFF</span>
-                    <p class="aa-top-slider-price">$460,000</p>
-                    <a href="#" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
-                </div>
-                <!-- / Top slider content -->
-            </div>
-            <!-- / Top slider single slide -->
-            <!-- Top slider single slide -->
-            <div class="aa-top-slider-single">
-                <img src="/img/slider/1.jpg" alt="img">
-                <!-- Top slider content -->
-                <div class="aa-top-slider-content">
-                    <span class="aa-top-slider-catg">Duplex</span>
-                    <h2 class="aa-top-slider-title">1560 Square Feet</h2>
-                    <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i>South Beach, Miami (USA)</p>
-                    <span class="aa-top-slider-off">30% OFF</span>
-                    <p class="aa-top-slider-price">$460,000</p>
-                    <a href="#" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
-                </div>
-                <!-- / Top slider content -->
-            </div>
-            <!-- / Top slider single slide -->
-            <!-- Top slider single slide -->
-            <div class="aa-top-slider-single">
-                <img src="/img/slider/5.jpg" alt="img">
-                <!-- Top slider content -->
-                <div class="aa-top-slider-content">
-                    <span class="aa-top-slider-catg">Duplex</span>
-                    <h2 class="aa-top-slider-title">1560 Square Feet</h2>
-                    <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i>South Beach, Miami (USA)</p>
-                    <span class="aa-top-slider-off">30% OFF</span>
-                    <p class="aa-top-slider-price">$460,000</p>
-                    <a href="#" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
-                </div>
-                <!-- / Top slider content -->
-            </div>
-            <!-- / Top slider single slide -->
-            <!-- Top slider single slide -->
-            <div class="aa-top-slider-single">
-                <img src="/img/slider/4.jpg" alt="img">
-                <!-- Top slider content -->
-                <div class="aa-top-slider-content">
-                    <span class="aa-top-slider-catg">Duplex</span>
-                    <h2 class="aa-top-slider-title">1560 Square Feet</h2>
-                    <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i>South Beach, Miami (USA)</p>
-                    <span class="aa-top-slider-off">30% OFF</span>
-                    <p class="aa-top-slider-price">$460,000</p>
-                    <a href="#" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
-                </div>
-                <!-- / Top slider content -->
-            </div>
-            <!-- / Top slider single slide -->
-            <!-- Top slider single slide -->
-            <div class="aa-top-slider-single">
-                <img src="/img/slider/6.jpg" alt="img">
-                <!-- Top slider content -->
-                <div class="aa-top-slider-content">
-                    <span class="aa-top-slider-catg">Duplex</span>
-                    <h2 class="aa-top-slider-title">1560 Square Feet</h2>
-                    <p class="aa-top-slider-location"><i class="fa fa-map-marker"></i>South Beach, Miami (USA)</p>
-                    <span class="aa-top-slider-off">30% OFF</span>
-                    <p class="aa-top-slider-price">$460,000</p>
-                    <a href="#" class="aa-top-slider-btn">Read More <span class="fa fa-angle-double-right"></span></a>
-                </div>
-                <!-- / Top slider content -->
-            </div>
-            <!-- / Top slider single slide -->
+
+            <% }) %>
         </div>
     </div>
 </section>
@@ -361,8 +291,8 @@
                     <% properties.forEach((property) => { %>
                         <div class="col-md-4">
                             <article class="aa-properties-item">
-                                <a href="#" class="aa-properties-item-img">
-                                    <img src="<%- properties[0].images[0] %>" alt="img">
+                                <a href="/properties/<%- property.slug%>" class="aa-properties-item-img">
+                                    <img src="<%-properties[0].images[0] %>?random=<%- property.counter%>" alt="img">
                                 </a>
                                 <div class="aa-tag for-sale">
                                     For Sale
@@ -376,14 +306,14 @@
                                         <span><%- property.squareMeters %> Sq Meters</span>
                                     </div>
                                     <div class="aa-properties-about">
-                                        <h3><a href="#"><%- property.name %></a></h3>
+                                        <h3><a href="/properties/<%- property.slug%>"><%- property.name %></a></h3>
                                         <p><%- property.description %></p>
                                     </div>
                                     <div class="aa-properties-detial">
                     <span class="aa-price">
-                      <%- property.price %> EGP
+                      <%- property.price.toLocaleString() %> EGP
                     </span>
-                                        <a href="/" class="aa-secondary-btn">View Details</a>
+                                        <a href="/properties/<%- property.slug%>" class="aa-secondary-btn">View Details</a>
                                     </div>
                                 </div>
                             </article>
@@ -506,6 +436,7 @@
                                 <div class="aa-single-agents">
                                     <div class="aa-agents-img">
                                         <img src="/img/agents/agent-1.png" alt="agent member image">
+
                                     </div>
                                     <div class="aa-agetns-info">
                                         <h4><a href="#">Philip Smith</a></h4>

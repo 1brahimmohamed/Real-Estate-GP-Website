@@ -912,7 +912,7 @@ img {
 ====================*/
 
 #aa-promo-banner {
-  background-image: url("../img/promo-banner.jpg");
+  background-image: url("https://loremflickr.com/1920/1280/real-estate");
   background-attachment: fixed;
   background-position: center center;
   background-size: cover;
@@ -1333,7 +1333,7 @@ img {
 ====================*/
 
 #aa-property-header {
-  background-image: url("../img/property-header-bg.jpg");
+  background-image: url("https://loremflickr.com/1920/1280/real-estate");
   background-attachment: fixed;
   background-position: center center;
   background-size: cover;

@@ -21,6 +21,11 @@ const getPopularProperties = async (sortQuan,limit) => {
 
 exports.getHomePage = asyncErrorCatching(async (req, res) => {
 
+    const properties = await Property.find().sort('-createdAt').limit(6);
+    let counter = 1;
+    properties.forEach(property => {
+        property.counter = counter++;
+    });
 
     res
         .status(200)
@@ -29,7 +34,7 @@ exports.getHomePage = asyncErrorCatching(async (req, res) => {
             {
                 pageTitle: `${jsonCommonData.pageTitlesBase} | Home`,
                 commonData: jsonCommonData,
-                properties: await getPopularProperties('createdAt',6),
+                properties,
                 aboutUs: jsonAboutUsSection
             }
         );
@@ -43,7 +48,6 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
     req.query.page = req.query.page || 1;
     req.query.sort = req.query.sort || '-createdAt';
 
-    console.log(req.query)
 
     // Do the filtering, sorting, limiting and pagination
     const operations = new APIOperations(Property.find(), req.query)
@@ -56,6 +60,14 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
     // Execute the query
     const properties = await operations.query;
     const popularProperties = await getPopularProperties('ratingQuantity',3);
+
+    let counter = 1;
+    properties.forEach(property => {
+        property.counter = counter++;
+    });
+    popularProperties.forEach(property => {
+        property.counter = counter++;
+    });
 
     let activePage = parseInt(req.query.page) || 1;
     let limitedPages = parseInt(req.query.limit) || 6;
@@ -80,15 +92,22 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
 exports.getPropertyPage = asyncErrorCatching(async (req, res) => {
 
     const property = await Property.findOne({slug: req.params.slug});
-    console.log(property)
+    const popularProperties = await getPopularProperties('ratingQuantity',3);
+
+    let counter = 1;
+    popularProperties.forEach(property => {
+        property.counter = counter++;
+    });
+
     res
         .status(200)
         .render(
             'website/property',
             {
                 pageTitle: `${jsonCommonData.pageTitlesBase} | Property`,
-                property,
+                popularProperties,
                 commonData: jsonCommonData,
+                property,
             }
         );
 });
