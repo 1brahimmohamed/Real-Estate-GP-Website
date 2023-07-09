@@ -20,6 +20,7 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const inquiryRouter = require('./routes/inquiryRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const messageRouter = require('./routes/messageRoutes');
 
 const globalErrorHandler = require('./controllers/errorController');
 const ErrorHandler = require('./utils/errorHandler');
@@ -87,6 +88,7 @@ app.use('/api/v1/properties', propertyRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/inquiries', inquiryRouter);
+app.use('/api/v1/messages', messageRouter);
 
 
 // error handling for unhandled routes

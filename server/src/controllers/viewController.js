@@ -6,11 +6,12 @@ const axios = require('axios');
 const APIOperations = require("../utils/apiOperations");
 
 
-const aboutUsSection = fs.readFileSync(path.join(__dirname, '../data/about.json'), 'utf-8');
-const commonData = fs.readFileSync(path.join(__dirname, '../data/common.json'), 'utf-8');
+const aboutUsSection = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/about.json'), 'utf-8'));
+const commonData = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/common.json'), 'utf-8'));
+const contactData = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/contact.json'), 'utf-8'));
 
-const jsonAboutUsSection = JSON.parse(aboutUsSection);
-const jsonCommonData = JSON.parse(commonData);
+// const aboutUsSection = JSON.parse(aboutUsSection);
+// const commonData = JSON.parse(commonData);
 
 
 const getPopularProperties = async (sortQuan,limit) => {
@@ -32,10 +33,10 @@ exports.getHomePage = asyncErrorCatching(async (req, res) => {
         .render(
             'website/index',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Home`,
-                commonData: jsonCommonData,
+                pageTitle: `${commonData.pageTitlesBase} | Home`,
+                commonData,
                 properties,
-                aboutUs: jsonAboutUsSection
+                aboutUs: aboutUsSection
             }
         );
 
@@ -78,8 +79,8 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
         .render(
             'website/properties',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Properties`,
-                commonData: jsonCommonData,
+                pageTitle: `${commonData.pageTitlesBase} | Properties`,
+                commonData,
                 properties,
                 popularProperties,
                 activePage,
@@ -104,9 +105,9 @@ exports.getPropertyPage = asyncErrorCatching(async (req, res) => {
         .render(
             'website/property',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Property`,
+                pageTitle: `${commonData.pageTitlesBase} | Property`,
+                commonData,
                 popularProperties,
-                commonData: jsonCommonData,
                 property,
             }
         );
@@ -119,8 +120,8 @@ exports.getSignupPage = asyncErrorCatching(async (req, res) => {
             'admin/authentication-register',
             // 'website/register',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Signup`,
-                commonData: jsonCommonData,
+                pageTitle: `${commonData.pageTitlesBase} | Signup`,
+                commonData,
             }
         );
 })
@@ -132,8 +133,8 @@ exports.getLoginPage = asyncErrorCatching(async (req, res) => {
             // 'website/signin',
             'admin/authentication-login',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Login`,
-                commonData: jsonCommonData,
+                pageTitle: `${commonData.pageTitlesBase} | Login`,
+                commonData,
             }
         );
 });
@@ -144,8 +145,9 @@ exports.getContactPage = asyncErrorCatching(async (req, res) => {
         .render(
             'website/contact',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Contact Us`,
-                commonData: jsonCommonData,
+                pageTitle: `${commonData.pageTitlesBase} | Contact Us`,
+                commonData,
+                contact: contactData,
             }
         );
 });
@@ -156,8 +158,8 @@ exports.getGalleryPage = asyncErrorCatching(async (req, res) => {
         .render(
             'website/gallery',
             {
-                pageTitle: `${jsonCommonData.pageTitlesBase} | Gallery`,
-                commonData: jsonCommonData,
+                pageTitle: `${commonData.pageTitlesBase} | Gallery`,
+                commonData: commonData,
             }
         );
 });

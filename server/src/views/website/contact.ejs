@@ -144,11 +144,11 @@
               </div>
               <div class="aa-contact-top-right">
                 <h2>Contact</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae placeat aspernatur aperiam, quisquam voluptas enim tempore ab itaque nam modi eos corrupti distinctio nobis labore dolorum quae tenetur. Sapiente, sequi.</p>
+                <p><%- contact.message %></p>
                 <ul class="contact-info-list">
-                  <li> <i class="fa fa-phone"></i> 1-700-564-6321</li>
-                  <li> <i class="fa fa-envelope-o"></i> info@homeproperty.com</li>
-                  <li> <i class="fa fa-map-marker"></i> 36008 AL-77, Talladega, AL 35160, USA</li>
+                  <li> <i class="fa fa-phone"></i> <%- commonData.phone %> </li>
+                  <li> <i class="fa fa-envelope-o"></i> <%- commonData.email %></li>
+                  <li> <i class="fa fa-map-marker"></i> <%- contact.address %></li>
                 </ul>
               </div>
             </div>
@@ -159,7 +159,7 @@
                 <p>Your email address will not be published. Required fields are marked <strong class="required">*</strong></p>
               </div>
               <div class="aa-contact-form">
-                <form class="contactform">                  
+                <form class="contactform" id="contact-form">
                   <p class="comment-form-author">
                     <label for="author">Name <span class="required">*</span></label>
                     <input type="text" name="author" value="" size="30" required="required">
