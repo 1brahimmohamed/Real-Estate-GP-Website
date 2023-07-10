@@ -151,6 +151,7 @@ exports.getContactPage = asyncErrorCatching(async (req, res, next) => {
             {
                 pageTitle: `${commonData.pageTitlesBase} | Contact Us`,
                 contact: contactData,
+                commonData,
             }
         );
 });
@@ -176,7 +177,6 @@ exports.getAdminPage = asyncErrorCatching(async (req, res, next) => {
             'admin/index',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Admin`,
-                user: req.user,
             }
         );
 });

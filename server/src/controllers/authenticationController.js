@@ -161,7 +161,6 @@ exports.protect = asyncErrorCatching(async (req, res, next) => {
 exports.isLoggedIn = asyncErrorCatching(async (req, res, next) => {
 
     if (req.cookies.jwt) {
-
         // Verify the token
         const decoded = jwt.verify(
             req.cookies.jwt,
@@ -180,7 +179,7 @@ exports.isLoggedIn = asyncErrorCatching(async (req, res, next) => {
         if (newUser.changedPasswordAfter(decoded.iat))
             return next();
 
-        // There is logged in user
+        // There is logged-in user
         res.locals.user = newUser;
 
         return next();
