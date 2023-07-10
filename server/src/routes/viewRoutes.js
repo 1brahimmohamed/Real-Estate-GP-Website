@@ -1,8 +1,11 @@
 const express = require('express');
 const viewController = require('../controllers/viewController');
+const authenticationController = require('../controllers/authenticationController');
 
 const router = express.Router();
 
+
+router.use(authenticationController.isLoggedIn);
 
 router.get('/', viewController.getHomePage);
 router.get('/properties/', viewController.getPropertiesPage);
@@ -12,5 +15,11 @@ router.get('/login', viewController.getLoginPage);
 router.get('/contact', viewController.getContactPage);
 router.get('/gallery', viewController.getGalleryPage);
 
+
+router.get('/admin',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminPage
+);
 
 module.exports = router;

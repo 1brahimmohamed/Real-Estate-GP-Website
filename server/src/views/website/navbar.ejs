@@ -1,0 +1,37 @@
+<header id="aa-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="aa-header-area">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <div class="aa-header-left">
+                                <div class="aa-telephone-no">
+                                    <span class="fa fa-phone"></span>
+                                    +20 100 049 8966
+                                </div>
+                                <div class="aa-email hidden-xs">
+                                    <span class="fa fa-envelope-o"></span> info@summithomes.com
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-6">
+                            <% if (!locals.user) { %>
+                                <div class="aa-header-right">
+                                    <a href="/signup" class="aa-register">Register</a>
+                                    <a href="/login" class="aa-login">Login</a>
+                                </div>
+                            <% } else { %>
+                                <div class="aa-header-right">
+                                    <a href="/" class="aa-register"><%- locals.user.name %></a>
+                                    <a href="" id="logout-btn" class="aa-login">Logout</a>
+                                </div>
+                            <% } %>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>

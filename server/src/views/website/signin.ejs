@@ -51,14 +51,14 @@
                 <a class="aa-property-home" href="/">Property Home</a>
                 <h4>Sign in to your account</h4>
               </div>
-              <form class="contactform">                                                 
+              <form class="contactform" id="login-form">
                 <div class="aa-single-field">
                   <label for="email">Email <span class="required">*</span></label>
-                  <input type="email" required="required" aria-required="true" value="" name="email">
+                  <input type="email" required="required" aria-required="true" value="" name="email" id="email">
                 </div>
                 <div class="aa-single-field">
                   <label for="password">Password <span class="required">*</span></label>
-                  <input type="password" name="password"> 
+                  <input type="password" name="password" required id="password">
                 </div>
                 <div class="aa-single-field">
                 <label>
@@ -76,7 +76,8 @@
       </div>
     </div>
   </section>
-  
+
+
   <!-- jQuery library -->
   <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> -->
   <script src="/js/jquery.min.js"></script>
@@ -93,6 +94,9 @@
   <!-- Custom js -->
   <script src="/js/custom.js"></script>
   <!-- Navigation logo -->
-  <script type="text/javascript" src="/js/navimage.js"></script>
+    <script type="text/javascript" src="/js/navimage.js"></script>
+  <script type="text/javascript" src="js/logout.js"></script>
+  <script type="text/javascript" src="/js/login.js"></script>
+
   </body>
 </html>

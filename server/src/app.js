@@ -20,6 +20,9 @@ const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const inquiryRouter = require('./routes/inquiryRoutes');
 const viewRouter = require('./routes/viewRoutes');
+const messageRouter = require('./routes/messageRoutes');
+
+const cookieParser = require('cookie-parser');
 
 const globalErrorHandler = require('./controllers/errorController');
 const ErrorHandler = require('./utils/errorHandler');
@@ -40,6 +43,13 @@ app.use(express.static(`${__dirname}/public`));
 // set security HTTP headers
 app.use(helmet());
 
+app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+        "img-src": ["'self'", 'https: data:', 'http:'],
+    }
+}));
+
 // limit requests from same IP
 const limiter = rateLimit({
     max: 100,
@@ -56,6 +66,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb'}));
+app.use(cookieParser());
 
 // data sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -74,12 +85,18 @@ app.use(hpp({
 }));
 
 
+// app.use((req, res, next) => {
+//     console.log(req.cookies);
+//     next();
+// });
+
 // ------------------------------------------   Routes  ------------------------------------------//
 app.use('/', viewRouter);
 app.use('/api/v1/properties', propertyRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
 app.use('/api/v1/inquiries', inquiryRouter);
+app.use('/api/v1/messages', messageRouter);
 
 
 // error handling for unhandled routes

@@ -51,35 +51,8 @@
 
 
   <!-- Start header section -->
-  <header id="aa-header">  
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="aa-header-area">
-            <div class="row">
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="aa-header-left">
-                  <div class="aa-telephone-no">
-                    <span class="fa fa-phone"></span>
-                     <%- commonData.phone %>
-                  </div>
-                  <div class="aa-email hidden-xs">
-                    <span class="fa fa-envelope-o"></span> <%- commonData.email %>
-                  </div>
-                </div>              
-              </div>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <div class="aa-header-right">
-                  <a href="/signup" class="aa-register">Register</a>
-                  <a href="/login" class="aa-login">Login</a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+
+<%- include('navbar.ejs') %>
   <!-- End header section -->
   <!-- Start menu section -->
   <section id="aa-menu-area">
@@ -468,6 +441,8 @@
   <!-- Custom js -->
   <script src="/js/custom.js"></script>
   <!-- Navigation logo -->
-  <script type="text/javascript" src="/js/navimage.js"></script>
+     <script type="text/javascript" src="/js/navimage.js"></script>
+  <script type="text/javascript" src="js/logout.js"></script>
+
   </body>
 </html>

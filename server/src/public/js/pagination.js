@@ -6,12 +6,9 @@ const limitElements = document.getElementById('limit');
 // let selectedPage = 1;
 // let sortBy = document.getElementById('sort').value;
 
-let limit = document.getElementById('limitedPageVal').innerText;
-let selectedPage = document.getElementById('activePageVal').innerText;
+let limit = parseInt(document.getElementById('limitedPageVal').innerText);
+let selectedPage = parseInt(document.getElementById('activePageVal').innerText);
 let sortBy =  document.getElementById('selectedOptionVal').innerText;
-
-limit = parseInt(limit);
-selectedPage = parseInt(selectedPage);
 
 paginationLinks.forEach(link => {
     link.addEventListener('click', event => {
@@ -25,13 +22,11 @@ paginationLinks.forEach(link => {
 });
 
 sortElements.addEventListener('change', () => {
-    console.log('etlk')
     sortBy = sortElements.value;
     window.location.href = `http://localhost:3000/properties/?sort=${sortBy}&page=${selectedPage}&limit=${limit}`;
 });
 
 limitElements.addEventListener('change', () => {
-    console.log('esafsdftlk')
 
     limit = limitElements.value;
     window.location.href = `http://localhost:3000/properties/?sort=${sortBy}&page=${selectedPage}&limit=${limit}`;
