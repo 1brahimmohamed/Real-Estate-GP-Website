@@ -1,9 +1,12 @@
 const Property = require('../models/propertyModel');
+const User = require('../models/userModel');
+
 const asyncErrorCatching = require('../utils/asyncErrorCatching');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const APIOperations = require("../utils/apiOperations");
+const ErrorHandler = require("../utils/errorHandler");
 
 
 const aboutUsSection = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/about.json'), 'utf-8'));
@@ -20,7 +23,7 @@ const getPopularProperties = async (sortQuan,limit) => {
 
 
 
-exports.getHomePage = asyncErrorCatching(async (req, res) => {
+exports.getHomePage = asyncErrorCatching(async (req, res, next) => {
 
     const properties = await Property.find().sort('-createdAt').limit(6);
     let counter = 1;
@@ -34,7 +37,7 @@ exports.getHomePage = asyncErrorCatching(async (req, res) => {
             'website/index',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Home`,
-                commonData,
+
                 properties,
                 aboutUs: aboutUsSection
             }
@@ -43,7 +46,7 @@ exports.getHomePage = asyncErrorCatching(async (req, res) => {
 
 });
 
-exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
+exports.getPropertiesPage = asyncErrorCatching(async (req, res, next) => {
 
     req.query.limit = req.query.limit || 6;
     req.query.page = req.query.page || 1;
@@ -80,7 +83,6 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
             'website/properties',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Properties`,
-                commonData,
                 properties,
                 popularProperties,
                 activePage,
@@ -90,9 +92,14 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res) => {
         );
 })
 
-exports.getPropertyPage = asyncErrorCatching(async (req, res) => {
+exports.getPropertyPage = asyncErrorCatching(async (req, res, next) => {
 
     const property = await Property.findOne({slug: req.params.slug});
+
+    if (!property) {
+        return next(new ErrorHandler('Property not found', 404));
+    }
+
     const popularProperties = await getPopularProperties('ratingQuantity',3);
 
     let counter = 1;
@@ -105,15 +112,14 @@ exports.getPropertyPage = asyncErrorCatching(async (req, res) => {
         .render(
             'website/property',
             {
-                pageTitle: `${commonData.pageTitlesBase} | Property`,
-                commonData,
+                pageTitle: `${property.name} `,
                 popularProperties,
                 property,
             }
         );
 });
 
-exports.getSignupPage = asyncErrorCatching(async (req, res) => {
+exports.getSignupPage = asyncErrorCatching(async (req, res, next) => {
     res
         .status(200)
         .render(
@@ -121,12 +127,11 @@ exports.getSignupPage = asyncErrorCatching(async (req, res) => {
             // 'website/register',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Signup`,
-                commonData,
             }
         );
 })
 
-exports.getLoginPage = asyncErrorCatching(async (req, res) => {
+exports.getLoginPage = asyncErrorCatching(async (req, res, next) => {
     res
         .status(200)
         .render(
@@ -134,32 +139,45 @@ exports.getLoginPage = asyncErrorCatching(async (req, res) => {
             'admin/authentication-login',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Login`,
-                commonData,
             }
         );
 });
 
-exports.getContactPage = asyncErrorCatching(async (req, res) => {
+exports.getContactPage = asyncErrorCatching(async (req, res, next) => {
     res
         .status(200)
         .render(
             'website/contact',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Contact Us`,
-                commonData,
                 contact: contactData,
             }
         );
 });
 
-exports.getGalleryPage = asyncErrorCatching(async (req, res) => {
+exports.getGalleryPage = asyncErrorCatching(async (req, res, next) => {
     res
         .status(200)
         .render(
             'website/gallery',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Gallery`,
-                commonData: commonData,
             }
         );
 });
+
+
+exports.getAdminPage = asyncErrorCatching(async (req, res, next) => {
+
+
+    res
+        .status(200)
+        .render(
+            'admin/index',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Admin`,
+                user: req.user,
+            }
+        );
+});
+

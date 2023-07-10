@@ -9,50 +9,51 @@
 const express = require("express");
 const router = express.Router();
 const userController = require('./../controllers/userController');
-const authController = require('./../controllers/authenticationController');
+const authenticationController = require('./../controllers/authenticationController');
 
 
 
 // ------------------------------------------   User Operations done by user ------------------------------ //
 
 
-router.post('/signup', authController.signup);
-router.post('/login', authController.login);
+router.post('/signup', authenticationController.signup);
+router.post('/login', authenticationController.login);
+router.post('/logout', authenticationController.logout);
 
-router.post('/forgotPassword', authController.forgotPassword);
-router.patch('/resetPassword/:token', authController.resetPassword);
+router.post('/forgotPassword', authenticationController.forgotPassword);
+router.patch('/resetPassword/:token', authenticationController.resetPassword);
 
 
 // update user data
 router.patch(
     '/updateMe',
-    authController.protect,
+    authenticationController.protect,
     userController.updateMe
 );
 
 // delete user account
 router.delete(
     '/deleteMe',
-    authController.protect,
+    authenticationController.protect,
     userController.deleteMe
 );
 
 // update user password
 router.patch(
     '/updatePassword',
-    authController.protect,
-    authController.updatePassword
+    authenticationController.protect,
+    authenticationController.updatePassword
 );
 
 router.patch(
     '/addToWishlist/:id',
-    authController.protect,
+    authenticationController.protect,
     userController.addToWishlist
 );
 
 router.patch(
     '/removeFromWishlist/:id',
-    authController.protect,
+    authenticationController.protect,
     userController.removeFromWishlist
 );
 // ------------------------------------------   User Operations done by admin ------------------------------ //
@@ -61,8 +62,8 @@ router.patch(
 router
     .route('/')
     .get(
-        authController.protect,
-        authController.restrictTo('admin'),
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
         userController.getAllUsers
     )
     .post(userController.createUser);
@@ -71,18 +72,18 @@ router
 router
     .route('/:id')
     .get(
-        authController.protect,
-        authController.restrictTo('admin'),
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
         userController.getUser
     )
     .patch(
-        authController.protect,
-        authController.restrictTo('admin'),
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
         userController.updateUser
     )
     .delete(
-        authController.protect,
-        authController.restrictTo('admin'),
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
         userController.deleteUser
     );
 

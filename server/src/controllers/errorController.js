@@ -7,7 +7,8 @@
  ************************************************************************************/
 
 const ErrorHandler = require('../utils/errorHandler');
-
+const fs = require('fs');
+const path = require('path');
 
 /**
  * function: handleCastErrorDB
@@ -66,37 +67,55 @@ const handleJWTExpiredError = __ => new ErrorHandler("Your session has expired, 
 /**
  * function: sendErrorDev
  * @param err
+ * @param req
  * @param res
  * @description: This function sends the error in development mode
  */
-const sendErrorDev = (err, res) => {
-    res.status(err.statusCode).json({
-        status: err.status,
-        error: err,
-        stack: err.stack,
-        message: err.message
-    });
+const sendErrorDev = (err, req, res) => {
+    if (req.originalUrl.startsWith('/api')) {
+        return res.status(err.statusCode).json({
+            status: err.status,
+            error: err,
+            stack: err.stack,
+            message: err.message
+        });
+    }
+    else {
+        return res.status(err.statusCode).render('website/404', {
+            title: 'Something went wrong!',
+            msg: err.message
+        });
+    }
 };
 
 /**
  * function: sendErrorProd
  * @param err
+ * @param req
  * @param res
  * @description: This function sends the error in production mode
  */
-const sendErrorProd = (err, res) => {
-    // Operational, trusted error: send message to client
-    if (err.isOperational){
-        res.status(err.statusCode).json({
-            status: err.status,
-            message: err.message
-        });
+const sendErrorProd = (err, req, res) => {
+    if (req.originalUrl.startsWith('/api'))
+    {    // Operational, trusted error: send message to client
+        if (err.isOperational) {
+            return res.status(err.statusCode).json({
+                status: err.status,
+                message: err.message
+            });
+        }
+        // Programming or other unknown error: don't leak error details
+        else {
+            return res.status(500).json({
+                status: 'error',
+                message: 'Something went wrong!'
+            });
+        }
     }
-    // Programming or other unknown error: don't leak error details
     else {
-        res.status(500).json({
-            status: 'error',
-            message: 'Something went wrong!'
+        return res.status(err.statusCode).render('website/404', {
+            title: 'Something went wrong!',
+            msg: err.message
         });
     }
 };
@@ -115,7 +134,7 @@ module.exports = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error';
 
-    if (process.env.NODE_ENV === 'development') sendErrorDev(err, res);
+    if (process.env.NODE_ENV === 'development') sendErrorDev(err, req, res);
 
     else if (process.env.NODE_ENV === 'production'){
         let error = {...err};
@@ -126,6 +145,6 @@ module.exports = (err, req, res, next) => {
         if (error.name === 'JsonWebTokenError')     error = handleJWTError(error);
         if (error.name === 'TokenExpiredError')     error = handleJWTExpiredError();
 
-        sendErrorProd(error, res)
+        sendErrorProd(error, req, res)
     }
 };

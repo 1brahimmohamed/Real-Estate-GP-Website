@@ -20,8 +20,26 @@ form.addEventListener('submit', async (e) => {
             subject: subjectInput.value,
             message: messageInput.value
         }),
-    }).then(response => response.json()).then(data => {
-        console.log(data);
-    });
+    })
+        .then(response => response.json())
+        .then(resp => {
+            if (resp.status === 'success') {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Message sent successfully!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                form.reset();
+            }
+            else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops... error sending message! Try again later.',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        });
 
 });

@@ -12,7 +12,7 @@ const crypto = require('crypto');
  * @description This function signs a jwt token
  */
 const signToken = id => {
-    return jwt.sign({ id }, process.env.JWT_SECRET, {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_IN
     });
 }
@@ -30,7 +30,7 @@ const createSendToken = (user, statusCode, res) => {
     const token = signToken(user._id);
 
     const cookieOptions = {
-        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 *1000),
+        expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000),
         httpOnly: true,
     };
 
@@ -82,7 +82,7 @@ exports.signup = asyncErrorCatching(async (req, res) => {
  * @type {(function(*, *, *): void)|*}
  */
 exports.login = asyncErrorCatching(async (req, res, next) => {
-    const { email, password } = req.body;
+    const {email, password} = req.body;
 
     // 1) Check if email and password exist
     if (!email || !password) {
@@ -90,14 +90,14 @@ exports.login = asyncErrorCatching(async (req, res, next) => {
     }
 
     // 2) Check if user exists && password is correct
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({email}).select('+password');
 
     if (!user || !(await user.correctPassword(password, user.password))) {
         return next(new ErrorHandler('Incorrect email or password', 401));
     }
 
-   // 3) If everything ok, send token to client
-   createSendToken(user, 200, res);
+    // 3) If everything ok, send token to client
+    createSendToken(user, 200, res);
 });
 
 /**
@@ -116,8 +116,10 @@ exports.protect = asyncErrorCatching(async (req, res, next) => {
     if (
         req.headers.authorization &&
         req.headers.authorization.startsWith('Bearer')
-    ){
+    ) {
         token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies.jwt) {
+        token = req.cookies.jwt;
     }
 
     if (!token)
@@ -140,7 +142,7 @@ exports.protect = asyncErrorCatching(async (req, res, next) => {
         );
 
     // Check if user changed password after the token was issued
-    if (newUser.changedPasswordAfter(decoded.iat)){
+    if (newUser.changedPasswordAfter(decoded.iat)) {
         return next(
             new ErrorHandler(
                 'User recently changed password! Please log in again.',
@@ -154,6 +156,47 @@ exports.protect = asyncErrorCatching(async (req, res, next) => {
 
     next();
 })
+
+
+exports.isLoggedIn = asyncErrorCatching(async (req, res, next) => {
+
+    if (req.cookies.jwt) {
+
+        // Verify the token
+        const decoded = jwt.verify(
+            req.cookies.jwt,
+            process.env.JWT_SECRET
+        );
+
+        console.log(decoded);
+
+        // Check if user still exists
+        const newUser = await User.findById(decoded.id);
+
+        if (!newUser)
+            return next();
+
+        // Check if user changed password after the token was issued
+        if (newUser.changedPasswordAfter(decoded.iat))
+            return next();
+
+        // There is logged in user
+        res.locals.user = newUser;
+
+        return next();
+    }
+    next();
+})
+
+
+exports.logout = asyncErrorCatching(async (req, res) => {
+    res.cookie('jwt', 'loggedout', {
+        expires: new Date(Date.now() - 10 * 1000),
+        httpOnly: true
+    });
+
+    res.status(200).json({status: 'success'});
+});
 
 /**
  * @name restrictTo
@@ -186,13 +229,13 @@ exports.restrictTo = (...roles) => {
  * @type {(function(*, *, *): void)|*}
  */
 exports.forgotPassword = asyncErrorCatching(async (req, res, next) => {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({email: req.body.email});
 
     if (!user) return next(new ErrorHandler('There is no user with email address.', 404));
 
     const resetToken = user.createPasswordResetToken();
 
-    await user.save({ validateBeforeSave: false });
+    await user.save({validateBeforeSave: false});
 
     const resetURL = `${req.protocol}://${req.get('host')}/api/v1/users/resetPassword/${resetToken}`;
 
@@ -251,7 +294,7 @@ exports.resetPassword = asyncErrorCatching(async (req, res, next) => {
 
     const user = await User.findOne({
         passwordResetToken: hashedToken,
-        passwordResetExpires: { $gt: Date.now() }
+        passwordResetExpires: {$gt: Date.now()}
     });
 
 

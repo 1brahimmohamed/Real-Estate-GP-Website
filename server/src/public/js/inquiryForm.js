@@ -1,28 +1,45 @@
 const form = document.getElementById('inquiry-form');
+const inquiryMessageResponse = document.getElementById('inquiry-message');
 
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const inquiryMessage = form.elements['message'].value;
     const propertyID = document.getElementById('property-id').innerText;
+    const userID = document.getElementById('user-id') || null;
 
-
-    console.log(inquiryMessage, propertyID);
-
-    await fetch('/api/v1/inquiries', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            Authorization: "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0YTAzYjJhNTg1MmM5YWFhMWFhNzA3ZCIsImlhdCI6MTY4ODkyOTU4NiwiZXhwIjoxNjk2NzA1NTg2fQ.Qr_kFF41IO0cNPOJ9QvQu6ZuWm_ExgQeXhFgilLk28s",
-
-        },
-        body: JSON.stringify({
-            user: "64a03b2a5852c9aaa1aa707d",
-            property: propertyID,
-            message: inquiryMessage
-        }),
-    }).then(response => response.json()).then(data => {
-        console.log(data);
-    });
+    if (userID) {
+        try {
+            await fetch('/api/v1/inquiries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    user: userID.innerText,
+                    property: propertyID,
+                    message: inquiryMessage
+                }),
+            })
+                .then(response => response.json())
+                .then(resp => {
+                    if (resp.status === 'success') {
+                        inquiryMessageResponse.innerText = 'Inquiry sent!';
+                        inquiryMessageResponse.style.color = 'green';
+                        inquiryMessageResponse.style.display = 'block';
+                    } else if (resp.status === 'fail') {
+                        console.log(resp)
+                        inquiryMessageResponse.innerText = 'Inquiry failed to send!';
+                        inquiryMessageResponse.style.display = 'block';
+                    }
+                });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    else {
+        inquiryMessageResponse.innerText = 'You must be logged in to send an inquiry!\n Please login or register.';
+        inquiryMessageResponse.style.display = 'block';
+    }
 
 });

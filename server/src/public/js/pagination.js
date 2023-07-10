@@ -8,7 +8,7 @@ const limitElements = document.getElementById('limit');
 
 let limit = parseInt(document.getElementById('limitedPageVal').innerText);
 let selectedPage = parseInt(document.getElementById('activePageVal').innerText);
-let sortBy =  parseInt(document.getElementById('selectedOptionVal').innerText);
+let sortBy =  document.getElementById('selectedOptionVal').innerText;
 
 paginationLinks.forEach(link => {
     link.addEventListener('click', event => {
@@ -22,13 +22,11 @@ paginationLinks.forEach(link => {
 });
 
 sortElements.addEventListener('change', () => {
-    console.log('etlk')
     sortBy = sortElements.value;
     window.location.href = `http://localhost:3000/properties/?sort=${sortBy}&page=${selectedPage}&limit=${limit}`;
 });
 
 limitElements.addEventListener('change', () => {
-    console.log('esafsdftlk')
 
     limit = limitElements.value;
     window.location.href = `http://localhost:3000/properties/?sort=${sortBy}&page=${selectedPage}&limit=${limit}`;

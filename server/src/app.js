@@ -22,6 +22,8 @@ const inquiryRouter = require('./routes/inquiryRoutes');
 const viewRouter = require('./routes/viewRoutes');
 const messageRouter = require('./routes/messageRoutes');
 
+const cookieParser = require('cookie-parser');
+
 const globalErrorHandler = require('./controllers/errorController');
 const ErrorHandler = require('./utils/errorHandler');
 
@@ -64,6 +66,7 @@ if (process.env.NODE_ENV === 'development') {
 
 // body parser, reading data from body into req.body
 app.use(express.json({ limit: '10kb'}));
+app.use(cookieParser());
 
 // data sanitization against NoSQL query injection
 app.use(mongoSanitize());
@@ -81,6 +84,11 @@ app.use(hpp({
     ]
 }));
 
+
+// app.use((req, res, next) => {
+//     console.log(req.cookies);
+//     next();
+// });
 
 // ------------------------------------------   Routes  ------------------------------------------//
 app.use('/', viewRouter);
