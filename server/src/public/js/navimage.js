@@ -8,3 +8,5 @@ window.addEventListener('scroll', function() {
         scrollImage.src = '/img/logo/cropped.png';
     }
 });
+
+

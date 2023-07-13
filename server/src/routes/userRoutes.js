@@ -58,6 +58,13 @@ router.patch(
 );
 // ------------------------------------------   User Operations done by admin ------------------------------ //
 
+
+router.get('/getUserStats/:selectBy?',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    userController.getUserStats
+);
+
 // get all users, create a user
 router
     .route('/')
@@ -73,7 +80,6 @@ router
     .route('/:id')
     .get(
         authenticationController.protect,
-        authenticationController.restrictTo('admin'),
         userController.getUser
     )
     .patch(

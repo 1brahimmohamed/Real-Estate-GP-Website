@@ -41,6 +41,8 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="/js/sweetalert2.all.min.js"></script>
+
 
 </head>
 <body class="aa-price-range">
@@ -158,75 +160,6 @@
                                 <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
                             </ul>
                         </div>
-                        <!-- Nearby properties -->
-                        <!--             <div class="aa-nearby-properties">-->
-                        <!--               <div class="aa-title">-->
-                        <!--                 <h2>Nearby Properties</h2>-->
-                        <!--                 <span></span>-->
-                        <!--               </div>-->
-                        <!--               <div class="aa-nearby-properties-area">-->
-                        <!--                 <div class="row">-->
-                        <!--                   <div class="col-md-6">-->
-                        <!--                     <article class="aa-properties-item">-->
-                        <!--                        <a class="aa-properties-item-img" href="#">-->
-                        <!--                          <img alt="img" src="/img/item/1.jpg">-->
-                        <!--                        </a>-->
-                        <!--                        <div class="aa-tag for-sale">-->
-                        <!--                          For Sale-->
-                        <!--                        </div>-->
-                        <!--                        <div class="aa-properties-item-content">-->
-                        <!--                          <div class="aa-properties-info">-->
-                        <!--                            <span>5 Rooms</span>-->
-                        <!--                            <span>2 Beds</span>-->
-                        <!--                            <span>3 Baths</span>-->
-                        <!--                            <span>1100 SQ FT</span>-->
-                        <!--                          </div>-->
-                        <!--                          <div class="aa-properties-about">-->
-                        <!--                            <h3><a href="#">Appartment Title</a></h3>-->
-                        <!--                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim molestiae vero ducimus quibusdam odit vitae.</p>                      -->
-                        <!--                          </div>-->
-                        <!--                          <div class="aa-properties-detial">-->
-                        <!--                            <span class="aa-price">-->
-                        <!--                              $35000-->
-                        <!--                            </span>-->
-                        <!--                            <a class="aa-secondary-btn" href="#">View Details</a>-->
-                        <!--                          </div>-->
-                        <!--                        </div>-->
-                        <!--                      </article>-->
-                        <!--                   </div>-->
-                        <!--                   <div class="col-md-6">-->
-                        <!--                     <article class="aa-properties-item">-->
-                        <!--                      <a class="aa-properties-item-img" href="#">-->
-                        <!--                        <img alt="img" src="/img/item/2.jpg">-->
-                        <!--                      </a>-->
-                        <!--                      <div class="aa-tag for-sale">-->
-                        <!--                        For Sale-->
-                        <!--                      </div>-->
-                        <!--                      <div class="aa-properties-item-content">-->
-                        <!--                        <div class="aa-properties-info">-->
-                        <!--                          <span>5 Rooms</span>-->
-                        <!--                          <span>2 Beds</span>-->
-                        <!--                          <span>3 Baths</span>-->
-                        <!--                          <span>1100 SQ FT</span>-->
-                        <!--                        </div>-->
-                        <!--                        <div class="aa-properties-about">-->
-                        <!--                          <h3><a href="#">Appartment Title</a></h3>-->
-                        <!--                          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Enim molestiae vero ducimus quibusdam odit vitae.</p>                      -->
-                        <!--                        </div>-->
-                        <!--                        <div class="aa-properties-detial">-->
-                        <!--                          <span class="aa-price">-->
-                        <!--                            $35000-->
-                        <!--                          </span>-->
-                        <!--                          <a class="aa-secondary-btn" href="#">View Details</a>-->
-                        <!--                        </div>-->
-                        <!--                      </div>-->
-                        <!--                    </article>-->
-                        <!--                   </div>-->
-                        <!--                 </div>-->
-                        <!--               </div>-->
-
-                        <!--             </div>-->
-
                     </div>
                 </div>
             </div>
@@ -254,6 +187,11 @@
                             </div>
                             <p id="inquiry-message" style="color: red; text-align: center; display: none"></p>
                         </form>
+
+                        <div class="aa-single-advance-search">
+                            <input type="submit" value="🤍 Save to whishlist" class="aa-search-btn"
+                                   id="save-btn">
+                        </div>
                     </div>
                     <!-- Start Single properties sidebar -->
                     <div class="aa-properties-single-sidebar">
@@ -306,8 +244,9 @@
 <script src="/js/custom.js"></script>
 <!-- Navigation logo -->
    <script type="text/javascript" src="/js/navimage.js"></script>
-  <script type="text/javascript" src="js/logout.js"></script>
+  <script type="text/javascript" src="/js/logout.js"></script>
 
 <script type="text/javascript" src="/js/inquiryForm.js"></script>
+<script type="text/javascript" src="/js/whishlist.js"></script>
 </body>
 </html>

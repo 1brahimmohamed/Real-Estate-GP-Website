@@ -17,10 +17,9 @@ const contactData = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/con
 // const commonData = JSON.parse(commonData);
 
 
-const getPopularProperties = async (sortQuan,limit) => {
+const getPopularProperties = async (sortQuan, limit) => {
     return Property.find().sort(sortQuan).limit(limit);
 };
-
 
 
 exports.getHomePage = asyncErrorCatching(async (req, res, next) => {
@@ -63,7 +62,7 @@ exports.getPropertiesPage = asyncErrorCatching(async (req, res, next) => {
 
     // Execute the query
     const properties = await operations.query;
-    const popularProperties = await getPopularProperties('ratingQuantity',3);
+    const popularProperties = await getPopularProperties('ratingQuantity', 3);
 
     let counter = 1;
     properties.forEach(property => {
@@ -100,7 +99,7 @@ exports.getPropertyPage = asyncErrorCatching(async (req, res, next) => {
         return next(new ErrorHandler('Property not found', 404));
     }
 
-    const popularProperties = await getPopularProperties('ratingQuantity',3);
+    const popularProperties = await getPopularProperties('ratingQuantity', 3);
 
     let counter = 1;
     popularProperties.forEach(property => {
@@ -181,3 +180,51 @@ exports.getAdminPage = asyncErrorCatching(async (req, res, next) => {
         );
 });
 
+exports.getAdminUsersPage = asyncErrorCatching(async (req, res, next) => {
+
+    res
+        .status(200)
+        .render(
+            'admin/data',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Users`,
+                dataTitle: 'Users',
+            }
+        )
+});
+
+exports.getAdminPropertiesPage = asyncErrorCatching(async (req, res, next) => {
+    res
+        .status(200)
+        .render(
+            'admin/data',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Properties`,
+                dataTitle: 'Properties',
+            }
+        )
+});
+
+exports.getAdminMessagesPage = asyncErrorCatching(async (req, res, next) => {
+    res
+        .status(200)
+        .render(
+            'admin/data',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Messages`,
+                dataTitle: 'Messages',
+            }
+        )
+});
+
+exports.getAdminInquriesPage = asyncErrorCatching(async (req, res, next) => {
+    res
+        .status(200)
+        .render(
+            'admin/data',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Inquires`,
+                dataTitle: 'Inquires',
+            }
+        )
+});

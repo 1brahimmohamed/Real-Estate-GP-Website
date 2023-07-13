@@ -21,4 +21,47 @@ router.get('/admin',
     viewController.getAdminPage
 );
 
+router.get('/admin/users',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminUsersPage
+);
+
+// router.get('/admin/users/:id',
+//     authenticationController.protect,
+//     authenticationController.restrictTo('admin'),
+//     viewController.getAdminUserPage
+// );
+
+router.get('/admin/properties',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminPropertiesPage
+);
+
+// router.get('/admin/properties/:id',
+//     authenticationController.protect,
+//     authenticationController.restrictTo('admin'),
+//     viewController.getAdminPropertyPage
+// );
+
+router.get('/admin/messages',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminMessagesPage
+);
+
+// router.get('/admin/messages/:id',
+//     authenticationController.protect,
+//     authenticationController.restrictTo('admin'),
+//     viewController.getAdminMessagePage
+// );
+
+router.get('/admin/inquries',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminInquriesPage
+);
+
+
 module.exports = router;

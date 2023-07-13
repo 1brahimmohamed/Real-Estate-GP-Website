@@ -14,8 +14,9 @@ const userSchema = new mongoose.Schema({
         required: [true, 'A user must have a name'],
         trim: true,
         maxlength: [40, 'A user name must have less or equal than 40 characters'],
-        minlength: [10, 'A user name must have more or equal than 10 characters']
+        minlength: [8, 'A user name must have more or equal than 10 characters']
     },
+
     email: {
         type: String,
         required: [true, 'A user must have an email'],
@@ -56,6 +57,7 @@ const userSchema = new mongoose.Schema({
     },
     phoneNumber: {
         type: String,
+        unique: true,
         required: [true, 'A user must have a phone number'],
         validate: validator.isMobilePhone
     },
@@ -64,18 +66,20 @@ const userSchema = new mongoose.Schema({
         enum: ['Egyptian', 'Non-Egyptian']
     },
     nationalID: {
+        unique: true,
+        length: [14, 'A user national ID must be 14 numbers'],
         type: String,
         required: [true, 'A user must have a national ID'],
         validate: validator.isNumeric
     },
     job: {
         type: String,
-        required: [true, 'A user must have a job'],
+        // required: [true, 'A user must have a job'],
     },
     salary: Number,
     maritalStatus: {
         type: String,
-        required: [true, 'A user must have a marital status'],
+        // required: [true, 'A user must have a marital status'],
         enum: {
             values: ['single', 'married', 'divorced', 'widowed'],
             message: 'Marital status is either: single, married, divorced, widowed',
@@ -94,7 +98,6 @@ const userSchema = new mongoose.Schema({
     active: {
         type: Boolean,
         default: true,
-        select: false
     },
 
     savedProperties: [
@@ -147,7 +150,7 @@ userSchema.pre('save', function (next) {
 // QUERY MIDDLEWARE: runs before any .find() query
 userSchema.pre(/^find/, function (next) {
     // this points to the current query
-    this.find({active: {$ne: false}});
+    // this.find({active: {$ne: false}});
     next();
 });
 

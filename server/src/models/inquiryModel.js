@@ -38,7 +38,7 @@ InquirySchema.pre(/^find/, function(next) {
         select: 'name'
     }).populate({
         path: 'user',
-        select: 'name'
+        select: 'name job email phoneNumber'
     })
 
     next();

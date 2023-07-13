@@ -49,7 +49,14 @@ exports.getAllUsers = asyncErrorCatching(async (req, res, next) => {
  */
 exports.getUser = asyncErrorCatching(async (req, res, next) => {
     // Find the user by ID
-    const user = await User.findById(req.params.id);
+    let user;
+
+    if (req.user.role !== 'admin') {
+        user = await User.findById(req.params.id).select('-active');
+    }
+    else {
+        user = await User.findById(req.params.id);
+    }
 
     // Check if the user exists
     if (!user) {
@@ -296,4 +303,38 @@ exports.removeFromWishlist = asyncErrorCatching(async (req, res, next) => {
         },
         message: 'Property removed from wish list'
     });
+});
+
+exports.getUserStats = asyncErrorCatching(async (req, res, next) => {
+
+    const selectBy = req.params.selectBy || 'nationality';
+
+    // Get the stats
+    const stats = await User.aggregate([
+        {
+            $match:{role: {$ne: 'admin'}},
+        },
+        {
+            $group: {
+                _id: `$${selectBy}`,
+                numUsers: {$sum: 1},
+                avgSalary: {$avg: '$salary'},
+                maxSalary: {$max: '$salary'},
+                minSalary: {$min: '$salary'},
+            }
+        },
+    ]);
+
+    // get number of users
+    const numUsers = await User.countDocuments({role: {$ne: 'admin'}});
+
+    // Send response
+    res.status(201).json({
+        status: 'success',
+        usersCount: numUsers,
+        data: {
+            stats
+        }
+    });
+
 });

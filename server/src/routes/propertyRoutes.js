@@ -23,7 +23,7 @@ router
 
 // get property stats
 router
-    .route('/propertyStats')
+    .route('/propertyStats/:selectBy?')
     .get(
         authenticationController.protect,
         authenticationController.restrictTo('admin'),

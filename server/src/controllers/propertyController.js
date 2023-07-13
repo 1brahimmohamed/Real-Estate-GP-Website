@@ -149,20 +149,25 @@ exports.createProperty = asyncErrorCatching(async (req, res, next) => {
  */
 exports.getPropertyStats = asyncErrorCatching(async (req, res, next) => {
 
+    const selectBy = req.params.selectBy || 'city';
+
+    console.log(selectBy)
+
     // Get the stats
     const stats = await Property.aggregate([
         {
-            $match: {ratingAverage: {$gte: 4.0}}
+            $match: {ratingAverage: {$gte: 1.0}}
         },
         {
             $group: {
-                _id: '$city',
+                _id: `$${selectBy}`,
                 numProperties: {$sum: 1},
                 numRatings: {$sum: '$ratingAverage'},
                 avgRating: {$avg: '$ratingAverage'},
                 avgPrice: {$avg: '$price'},
                 minPrice: {$min: '$price'},
                 maxPrice: {$max: '$price'},
+                avgSquareMeters: {$avg: '$squareMeters'},
             }
         },
     ]);

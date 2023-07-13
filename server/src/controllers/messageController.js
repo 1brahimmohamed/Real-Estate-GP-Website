@@ -34,6 +34,7 @@ exports.getMessage = asyncErrorCatching(async (req, res, next) => {
 
 exports.createMessage = asyncErrorCatching(async (req, res, next) => {
 
+    console.log(req.body);
     const message = await Message.create(req.body);
 
     res.status(201).json({

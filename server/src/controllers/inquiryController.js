@@ -4,7 +4,7 @@ const ErrorHandler = require('../utils/errorHandler');
 
 exports.getAllInquiries = asyncErrorCatching(async (req, res, next) => {
 
-    const inquiries = await Inquiry.find();
+    const inquiries = await Inquiry.find().sort({ createdAt: 'desc' });
 
     res.status(200).json({
         status: 'success',
@@ -56,6 +56,8 @@ exports.getUserInquiries = asyncErrorCatching(async (req, res, next) => {
         }
     });
 });
+
+
 
 exports.getPropertyInquiries = asyncErrorCatching(async (req, res, next) => {
 

@@ -2,9 +2,8 @@ const moongose = require('mongoose');
 const validator = require('validator');
 
 const MessageSchema = new moongose.Schema({
-    user: {
+    name: {
         type: String,
-        ref: 'User',
         required: [true, 'Message must belong to a user']
     },
 
@@ -26,7 +25,7 @@ const MessageSchema = new moongose.Schema({
 
     status: {
         type: String,
-        enum: ['pending', 'resolved', 'rejected'],
+        enum: ['pending', 'responded', 'rejected'],
         default: 'pending'
     },
 

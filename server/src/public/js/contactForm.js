@@ -15,7 +15,7 @@ form.addEventListener('submit', async (e) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            user: nameInput.value,
+            name: nameInput.value,
             email: emailInput.value,
             subject: subjectInput.value,
             message: messageInput.value
@@ -33,6 +33,7 @@ form.addEventListener('submit', async (e) => {
                 form.reset();
             }
             else {
+                console.log(resp)
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops... error sending message! Try again later.',
