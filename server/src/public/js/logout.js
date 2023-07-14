@@ -11,7 +11,10 @@ const logout = async () => {
         }).then(response => response.json()).then(resp => {
             if (resp.status === 'success') {
                 let url = window.location.href;
-                window.location.href = url;
+                if (url.includes('profile'))
+                    window.location.href = '/';
+                else
+                    window.location.href = url;
             }
         })
     }catch (err) {

@@ -228,3 +228,15 @@ exports.getAdminInquriesPage = asyncErrorCatching(async (req, res, next) => {
             }
         )
 });
+
+
+exports.getMyProfilePage = asyncErrorCatching(async (req, res, next) => {
+    res
+        .status(200)
+        .render(
+            'website/userpage',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | My Profile`,
+            }
+        )
+});

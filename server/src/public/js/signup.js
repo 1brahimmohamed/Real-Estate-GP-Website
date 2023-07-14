@@ -88,6 +88,12 @@ const validateData = (name,
         return true;
     }
 
+    if (!dateOfBirth) {
+        errorMessage.innerText = 'A user date of birth is required';
+        errorMessage.style.display = 'block';
+        return true;
+    }
+
     let date = new Date(dateOfBirth);
     let today = new Date();
 

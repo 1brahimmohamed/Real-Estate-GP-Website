@@ -142,7 +142,7 @@ userSchema.pre('save', function (next) {
 userSchema.pre('save', function (next) {
     this.populate({
         path: 'savedProperties',
-        select: 'name'
+        select: 'name images description price'
     })
     next();
 });
@@ -157,7 +157,7 @@ userSchema.pre(/^find/, function (next) {
 userSchema.pre(/^find/, function (next) {
     this.populate({
         path: 'savedProperties',
-        select: 'name'
+        select: 'name images description price'
     })
     next();
 });
