@@ -5,8 +5,14 @@ const authenticationController = require('../controllers/authenticationControlle
 const router = express.Router();
 
 
-router.use(authenticationController.isLoggedIn)
-;
+router.use(authenticationController.isLoggedIn);
+
+
+router.get('/my-profile',
+    authenticationController.protect,
+    viewController.getMyProfilePage
+);
+
 router.get('/', viewController.getHomePage);
 router.get('/contact', viewController.getContactPage);
 router.get('/properties/', viewController.getPropertiesPage);

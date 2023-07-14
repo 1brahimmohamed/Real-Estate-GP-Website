@@ -23,7 +23,7 @@
                                 </div>
                             <% } else { %>
                                 <div class="aa-header-right">
-                                    <a href="<%- locals.user.role === "admin"? '/admin':'/' %>" class="aa-register"><%- locals.user.name %></a>
+                                    <a href="<%- locals.user.role === "admin"? '/admin':'/my-profile' %>" class="aa-register"><%- locals.user.name %></a>
                                     <a href="" id="logout-btn" class="aa-login">Logout</a>
                                 </div>
                             <% } %>
