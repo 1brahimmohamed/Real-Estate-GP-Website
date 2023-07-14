@@ -97,7 +97,10 @@ exports.login = asyncErrorCatching(async (req, res, next) => {
     }
 
     // 3) If everything ok, send token to client
-    createSendToken(user, 200, res);
+    if (!user.active === false)
+        createSendToken(user, 200, res);
+    else
+        return next(new ErrorHandler('Your account is deactivated please contact admin!', 401));
 });
 
 /**
