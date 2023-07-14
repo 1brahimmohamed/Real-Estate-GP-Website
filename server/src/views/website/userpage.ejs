@@ -37,6 +37,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script src="/js/sweetalert2.all.min.js"></script>
 
 </head>
 <body>
@@ -149,15 +150,18 @@
                                 <div class="aa-blog-sidebar-single">
                                     <h3>Password Change</h3>
                                     <ul class="aa-blog-catg" id="dataList">
-                                        <li>Current Password           <span><input placeholder="Current Password" name="currentPassword" id="current-password"></span>       </li>
-                                        <li>New Password               <span><input placeholder="New Password" name="newPassword" id="new-password"></span>       </li>
-                                        <li>New Password Confirm       <span><input placeholder="New Password Confirm" name="newPasswordConfirm" id="new-password-confirm"></span>       </li>
+                                        <li>Current Password           <span><input type="password" placeholder="Current Password" name="currentPassword" id="current-password"></span>       </li>
+                                        <li>New Password               <span><input type="password" placeholder="New Password" name="newPassword" id="new-password"></span>       </li>
+                                        <li>New Password Confirm       <span><input type="password" placeholder="New Password Confirm" name="newPasswordConfirm" id="new-password-confirm"></span>       </li>
                                     </ul>
 
                                     <div style="width: 100%; text-align: center">
                                         <input class="aa-secondary-btn" type="submit" value="Change Password" id="edit-password-btn"
                                                style="width: 30%;border: 0px; border-radius: 0.5rem; margin-top: 1rem">
                                     </div>
+
+                                    <p id="message-response" style="display: none; color: red; text-align: center">Test</p>
+
                                 </div>
 
                                 <!-- Start single sidebar -->

@@ -1,23 +1,47 @@
 const editButton = document.getElementById('edit-data-btn');
-
-editButton.addEventListener('click', editData);
-
 const dataList = document.getElementById('dataList');
 const spans = dataList.getElementsByTagName('span');
-
 const mediaRightDivs = document.querySelectorAll('.media-right');
+const passwordChangeButton = document.getElementById('edit-password-btn');
+const messageResponse = document.getElementById('message-response');
+
 let aTags = [];
+let editMode = false;
 
 mediaRightDivs.forEach(div => {
     let aTagsOfDiv = div.getElementsByTagName('a');
     aTags.push(aTagsOfDiv);
 });
+aTags.forEach(aTag => {
+    aTag[0].addEventListener('click', async (e) => {
+        e.preventDefault();
 
-let editMode = false;
+        let id = aTag[0].id;
 
-function editData() {
+        let res = await fetch(`/api/v1/users/removeFromWishlist/${id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
 
-    if (!editMode){
+        let data = await res.json();
+
+        if (data.status === 'success') {
+            window.location.reload();
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!'
+            })
+        }
+    })
+})
+
+const editData = () => {
+
+    if (!editMode) {
 
         editMode = true;
 
@@ -37,8 +61,7 @@ function editData() {
         }
 
         editButton.value = 'Save';
-    }
-    else {
+    } else {
 
         editMode = false;
 
@@ -53,30 +76,50 @@ function editData() {
 }
 
 
-aTags.forEach(aTag => {
-    aTag[0].addEventListener('click', async (e) => {
-        e.preventDefault();
+editButton.addEventListener('click', editData);
 
-        let id = aTag[0].id;
+passwordChangeButton.addEventListener('click', async (e) => {
 
-        let res = await fetch(`/api/v1/users/removeFromWishlist/${id}`, {
+    e.preventDefault();
+
+    const currentPassword = document.getElementById('current-password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const newPasswordConfirm = document.getElementById('new-password-confirm').value;
+
+
+    if (newPassword !== newPasswordConfirm) {
+        messageResponse.innerText = 'New Passwords do not match!';
+        messageResponse.style.display = 'block';
+    } else {
+        let res = await fetch('/api/v1/users/updatePassword', {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({
+                passwordCurrent: currentPassword,
+                password: newPassword,
+                passwordConfirm: newPasswordConfirm,
+            })
         })
 
         let data = await res.json();
 
+        console.log(data);
+
         if (data.status === 'success') {
-            window.location.reload();
-        }
-        else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Password changed successfully!'
+            })
+        } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: 'Something went wrong!'
+                text: data.message,
             })
         }
-    })
-})
+    }
+});
+
