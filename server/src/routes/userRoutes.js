@@ -73,7 +73,11 @@ router
         authenticationController.restrictTo('admin'),
         userController.getAllUsers
     )
-    .post(userController.createUser);
+    .post(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        userController.createUser
+    );
 
 // get user, update user, delete user
 router

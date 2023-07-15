@@ -255,7 +255,7 @@ exports.getAdminUserPage = asyncErrorCatching(async (req, res, next) => {
         .render(
             'admin/user-page',
             {
-                pageTitle: `${commonData.pageTitlesBase} | User Page`,
+                pageTitle: `${commonData.pageTitlesBase} | ${user.name}`,
                 user,
                 inquires,
             }
@@ -264,19 +264,19 @@ exports.getAdminUserPage = asyncErrorCatching(async (req, res, next) => {
 
 exports.getAdminPropertyPage = asyncErrorCatching(async (req, res, next) => {
 
-        const property = await Property.findById(req.params.id);
-        const inquires = await Inquiry.find({property: req.params.id});
+    const property = await Property.findById(req.params.id);
+    const inquires = await Inquiry.find({property: req.params.id});
 
-        res
-            .status(200)
-            .render(
-                'admin/property-page',
-                {
-                    pageTitle: `${commonData.pageTitlesBase} | Property Page`,
-                    property,
-                    inquires,
-                }
-            );
+    res
+        .status(200)
+        .render(
+            'admin/property-page',
+            {
+                pageTitle: `${commonData.pageTitlesBase} |  ${property.name}`,
+                property,
+                inquires,
+            }
+        );
 });
 
 exports.getAdminMessagePage = asyncErrorCatching(async (req, res, next) => {
@@ -305,6 +305,29 @@ exports.getAdminInquiryPage = asyncErrorCatching(async (req, res, next) => {
             {
                 pageTitle: `${commonData.pageTitlesBase} | Inquiry Page`,
                 inquiry,
+            }
+        );
+});
+
+exports.getAdminAddUserPage = asyncErrorCatching(async (req, res, next) => {
+
+    res
+        .status(200)
+        .render(
+            'admin/add-user',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Add User`,
+            }
+        );
+});
+
+exports.getAdminAddPropertyPage = asyncErrorCatching(async (req, res, next) => {
+    res
+        .status(200)
+        .render(
+            'admin/add-property',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Add Property`,
             }
         );
 });
