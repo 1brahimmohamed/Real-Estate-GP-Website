@@ -35,13 +35,13 @@ const propertySchema = new mongoose.Schema({
 
     offer: {
         type: Number,
-        validate: {
-            validator: function (val) {
-                // this only points to current doc on NEW document creation
-                return val < this.price;
-            },
-            message: 'Offer price ({VALUE}) should be below regular price',
-        }
+        // validate: {
+        //     validator: function (val) {
+        //         // this only points to current doc on NEW document creation
+        //         return val < this.price;
+        //     },
+        //     message: 'Offer price ({VALUE}) should be below regular price',
+        // }
 
     },
 

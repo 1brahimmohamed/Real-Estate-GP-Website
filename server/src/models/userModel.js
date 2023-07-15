@@ -107,6 +107,8 @@ const userSchema = new mongoose.Schema({
         }
     ],
 
+
+
 }, {
     toJSON: {virtuals: true},
     toObject: {virtuals: true}
@@ -118,7 +120,7 @@ const userSchema = new mongoose.Schema({
  * @description virtual property to get the age of the user
  */
 userSchema.virtual('age').get(function () {
-    return Date.now() - this.dateOfBirth;
+    return (Date.now() - this.dateOfBirth);
 });
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()

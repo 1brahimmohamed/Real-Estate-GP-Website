@@ -32,6 +32,25 @@ exports.getInquiry = asyncErrorCatching(async (req, res, next) => {
 
 });
 
+exports.updateInquiry = asyncErrorCatching(async (req, res, next) => {
+
+    const inquiry = await Inquiry.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    })
+
+    if (!inquiry) {
+        return next(new ErrorHandler('No inquiry found with that ID', 404));
+    }
+
+    res.status(200).json({
+        status: 'success',
+        data: {
+            inquiry
+        }
+    });
+});
+
 exports.createInquiry = asyncErrorCatching(async (req, res, next) => {
 
     const inquiry = await Inquiry.create(req.body);
@@ -56,8 +75,6 @@ exports.getUserInquiries = asyncErrorCatching(async (req, res, next) => {
         }
     });
 });
-
-
 
 exports.getPropertyInquiries = asyncErrorCatching(async (req, res, next) => {
 

@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.route('/')
     .get(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
         messageController.getAllMessages
     )
     .post(
@@ -13,7 +15,14 @@ router.route('/')
 
 router.route('/:id')
     .get(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
         messageController.getMessage
+    )
+    .patch(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        messageController.updateMessage,
     )
 
 module.exports = router;

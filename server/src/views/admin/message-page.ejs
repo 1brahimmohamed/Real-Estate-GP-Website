@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%- pageTitle %></title>
+  <link rel="shortcut icon" type="image/png" href="/img/logo/icon.png" />
+  <link rel="stylesheet" href="/css-admin/styles.css" />
+  <script src="/js/sweetalert2.all.min.js"></script>
+
+</head>
+
+<body>
+<!--  Body Wrapper -->
+<div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+     data-sidebar-position="fixed" data-header-position="fixed">
+  <!-- Sidebar Start -->
+  <%- include('sidebar.ejs')%>
+  <!--  Sidebar End -->
+  <!--  Main wrapper -->
+  <div class="body-wrapper">
+    <!--  Header Start -->
+    <%- include('header.ejs')%>
+    <!--  Header End -->
+    <div class="container-fluid">
+      <div class="container-fluid">
+        <div class="card">
+          <div class="card-body">
+            <h5 id="titleInfo" class="card-title fw-semibold mb-4">Message Info</h5>
+            <div class="card">
+              <div class="card-body">
+                <form id="property-data">
+
+                  <div class="row">
+                    <div style="width: 50%;" class="mb-3">
+                      <label for="user-name" class="form-label">User Name</label>
+                      <div class="form-control" id="user-name" ><%- message.email %></div>
+                    </div>
+                    <div style="width: 50%;" class="mb-3">
+                      <label for="property-name" class="form-label">Property Name</label>
+                     <div class="form-control" id="property-name" ><%- message.subject %></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div style="width: 100%;" class="mb-3">
+                      <label for="message" class="form-label">Inquiry Message</label>
+                      <div  class="form-control" id="message" ><%- message.message %></div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div style="width: 50%;" class="mb-3">
+                      <label for="date" class="form-label">Created At</label>
+                      <div  class="form-control" id="date" ><%- message.createdAt.toLocaleDateString()%></div>
+                    </div>
+
+                    <div style="width: 50%;" class="mb-3">
+                      <label for="date" class="form-label">Status</label><br>
+                      <span id="active" class="badge bg-primary <%- message.status === 'pending'? ('bg-warning'):(message.status === 'responded'?'bg-success':'bg-danger') %> fw-semibold" style="height: 50%; width: 30%">
+                        <%- message.status %>
+                      </span>
+                    </div>
+
+                  </div>
+
+                  <button id="resolvedBtn" class="btn btn-success">Mark as responded</button>
+                  <button id="rejectedBtn" class="btn btn-primary">Mark as rejected</button>
+                  <button id="pendingBtn" class="btn btn-warning">Mark as pending</button>
+
+                </form>
+                <p id="message-response" style="display: none; color: red; text-align: center"></p>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/libs-admin/jquery/dist/jquery.min.js"></script>
+<script src="/libs-admin/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js-admin/sidebarmenu.js"></script>
+<script src="/js-admin/app.min.js"></script>
+<script src="/libs-admin/simplebar/dist/simplebar.js"></script>
+<script src="/js-admin/inquiryPage.js"></script>
+</body>
+
+</html>

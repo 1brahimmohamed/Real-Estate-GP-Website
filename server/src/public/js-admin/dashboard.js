@@ -33,7 +33,6 @@ const requestPropertyStatsData = async () => {
 
 const getUsersData = async () => {
 
-
     let res = await fetch(`api/v1/users/getUserStats/job`, {
         method: 'GET',
         headers: {
@@ -177,7 +176,7 @@ const updateFirstChart = async (propertyStats) => {
 
     let {ids, maxPrice, minPrice, maxPriceOfProperty} = extractData(propertyStats);
 
-    charts[1].updateSeries([
+    await charts[1].updateSeries([
         {name: `Max Price`, data: maxPrice},
         {name: `Min Price`, data: minPrice},
     ]);
@@ -196,9 +195,13 @@ const secondChart = async () => {
 
 
     let userData = await getUsersData();
+    // remove first element from userData array
 
-    let series = userData[1].map(user => user.numUsers);
-    let categories = userData[1].map(user => user._id);
+    const filteredStats = userData[1].filter(obj => obj._id !== null);
+
+    let series = filteredStats.map(user => user.numUsers);
+    let categories = filteredStats.map(user => user._id);
+
 
     var breakup = {
         color: "#adb5bd",
@@ -308,7 +311,7 @@ const thirdChart = async () => {
 document.getElementById('selection-id').addEventListener('change', async function () {
     selector = document.getElementById('selection-id').value;
     let propertyStats = await requestPropertyStatsData(selector);
-    updateFirstChart(propertyStats);
+    await updateFirstChart(propertyStats);
     titleOfChart.innerText = `Prices Overview by ${selector.charAt(0).toUpperCase() + selector.slice(1)}`;
 });
 
@@ -329,7 +332,6 @@ const viewMessages = async () => {
 
     let messages = await getMessages();
 
-    console.log(messages)
     for (let i = 0; i < 4; i++) {
         let date = new Date(messages[i].createdAt);
 
@@ -369,8 +371,6 @@ const getInquiries = async () => {
 const viewInquiries = async () => {
 
     let inquiries = await getInquiries();
-
-    console.log(inquiries)
 
     for (let i = 0; i < 4; i++) {
         let container = document.createElement('tr')
