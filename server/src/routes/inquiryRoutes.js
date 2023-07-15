@@ -34,5 +34,10 @@ router.route('/:id')
         authenticationController.restrictTo('admin'),
         inquiryController.getInquiry
     )
+    .patch(
+        authenticationController.protect,
+        authenticationController.restrictTo('admin'),
+        inquiryController.updateInquiry
+    )
 
 module.exports = router;

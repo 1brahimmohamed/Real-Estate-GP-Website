@@ -1,5 +1,7 @@
 const Property = require('../models/propertyModel');
 const User = require('../models/userModel');
+const Inquiry = require('../models/inquiryModel');
+const Message = require('../models/messageModel');
 
 const asyncErrorCatching = require('../utils/asyncErrorCatching');
 const fs = require('fs');
@@ -223,7 +225,7 @@ exports.getAdminInquriesPage = asyncErrorCatching(async (req, res, next) => {
         .render(
             'admin/data',
             {
-                pageTitle: `${commonData.pageTitlesBase} | Inquires`,
+                pageTitle: `${commonData.pageTitlesBase} | inquires`,
                 dataTitle: 'Inquires',
             }
         )
@@ -239,4 +241,70 @@ exports.getMyProfilePage = asyncErrorCatching(async (req, res, next) => {
                 pageTitle: `${commonData.pageTitlesBase} | My Profile`,
             }
         )
+});
+
+exports.getAdminUserPage = asyncErrorCatching(async (req, res, next) => {
+
+    const user = await User.findById(req.params.id);
+    const inquires = await Inquiry.find({user: req.params.id});
+
+    console.log(req.params.id)
+
+    res
+        .status(200)
+        .render(
+            'admin/user-page',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | User Page`,
+                user,
+                inquires,
+            }
+        );
+});
+
+exports.getAdminPropertyPage = asyncErrorCatching(async (req, res, next) => {
+
+        const property = await Property.findById(req.params.id);
+        const inquires = await Inquiry.find({property: req.params.id});
+
+        res
+            .status(200)
+            .render(
+                'admin/property-page',
+                {
+                    pageTitle: `${commonData.pageTitlesBase} | Property Page`,
+                    property,
+                    inquires,
+                }
+            );
+});
+
+exports.getAdminMessagePage = asyncErrorCatching(async (req, res, next) => {
+
+    const message = await Message.findById(req.params.id);
+
+    res
+        .status(200)
+        .render(
+            'admin/message-page',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Message Page`,
+                message,
+            }
+        );
+});
+
+exports.getAdminInquiryPage = asyncErrorCatching(async (req, res, next) => {
+
+    const inquiry = await Inquiry.findById(req.params.id);
+
+    res
+        .status(200)
+        .render(
+            'admin/inquiry-page',
+            {
+                pageTitle: `${commonData.pageTitlesBase} | Inquiry Page`,
+                inquiry,
+            }
+        );
 });

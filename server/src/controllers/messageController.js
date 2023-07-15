@@ -34,10 +34,29 @@ exports.getMessage = asyncErrorCatching(async (req, res, next) => {
 
 exports.createMessage = asyncErrorCatching(async (req, res, next) => {
 
-    console.log(req.body);
     const message = await Message.create(req.body);
 
     res.status(201).json({
+        status: 'success',
+        data: {
+            message
+        }
+    });
+});
+
+exports.updateMessage = asyncErrorCatching(async (req, res, next) => {
+
+
+    const message = await Message.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    });
+
+    if (!message) {
+        return next(new ErrorHandler('No Message found with that ID', 404));
+    }
+
+    res.status(200).json({
         status: 'success',
         data: {
             message

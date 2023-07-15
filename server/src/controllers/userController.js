@@ -99,9 +99,9 @@ exports.updateUser = asyncErrorCatching(async (req, res, next) => {
     // Send response
     res.status(200).json({
         status: 'success',
-        data: {
-            user
-        }
+        // data: {
+        //     user
+        // }
     });
 });
 

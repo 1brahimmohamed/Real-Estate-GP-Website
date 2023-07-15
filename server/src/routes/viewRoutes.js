@@ -33,11 +33,11 @@ router.get('/admin/users',
     viewController.getAdminUsersPage
 );
 
-// router.get('/admin/users/:id',
-//     authenticationController.protect,
-//     authenticationController.restrictTo('admin'),
-//     viewController.getAdminUserPage
-// );
+router.get('/admin/users/:id',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminUserPage
+);
 
 router.get('/admin/properties',
     authenticationController.protect,
@@ -45,11 +45,11 @@ router.get('/admin/properties',
     viewController.getAdminPropertiesPage
 );
 
-// router.get('/admin/properties/:id',
-//     authenticationController.protect,
-//     authenticationController.restrictTo('admin'),
-//     viewController.getAdminPropertyPage
-// );
+router.get('/admin/properties/:id',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminPropertyPage
+);
 
 router.get('/admin/messages',
     authenticationController.protect,
@@ -57,16 +57,22 @@ router.get('/admin/messages',
     viewController.getAdminMessagesPage
 );
 
-// router.get('/admin/messages/:id',
-//     authenticationController.protect,
-//     authenticationController.restrictTo('admin'),
-//     viewController.getAdminMessagePage
-// );
+router.get('/admin/messages/:id',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminMessagePage
+);
 
-router.get('/admin/inquries',
+router.get('/admin/inquires',
     authenticationController.protect,
     authenticationController.restrictTo('admin'),
     viewController.getAdminInquriesPage
+);
+
+router.get('/admin/inquires/:id',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminInquiryPage
 );
 
 
