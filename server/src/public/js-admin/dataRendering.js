@@ -2,9 +2,20 @@ const dataType = document.getElementById('data-type');
 const header = document.getElementById('header-row');
 const sorting = document.getElementById('selection-id');
 let table = document.getElementById('data-rows');
+const addBtn = document.getElementById('add-btn');
 
 let currentData = [];
 let currentHeader = [];
+
+if (addBtn) {
+    let addTitle = document.getElementById('add-btn-title');
+    if (addTitle.innerText === 'Add Users'){
+        addBtn.href = '/admin/add-user';
+    }
+    else if (addTitle.innerText === 'Add Properties'){
+        addBtn.href = '/admin/add-property';
+    }
+}
 
 const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -296,3 +307,4 @@ sorting.addEventListener('change', () => {
 });
 
 dataRendering();
+

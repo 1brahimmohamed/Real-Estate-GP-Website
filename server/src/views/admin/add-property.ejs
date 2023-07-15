@@ -27,7 +27,7 @@
       <div class="container-fluid">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title fw-semibold mb-4">Property Info</h5>
+            <h5 class="card-title fw-semibold mb-4">Add Property</h5>
             <div class="card">
               <div class="card-body">
                 <form id="property-data">
@@ -35,34 +35,34 @@
                   <div class="row">
                     <div style="width: 50%;" class="mb-3">
                       <label for="name" class="form-label">Name</label>
-                      <input type="text" class="form-control" id="name"  value="<%- property.name%>">
+                      <input type="text" class="form-control" id="name">
                     </div>
                     <div style="width: 50%;" class="mb-3">
                       <label for="slug" class="form-label">Slug</label>
-                      <input type="text" class="form-control" id="slug" value="<%- property.slug %>">
+                      <input type="text" class="form-control" id="slug">
                     </div>
                   </div>
 
                   <div class="row">
                     <div style="width: 50%;" class="mb-3">
                       <label for="price" class="form-label">Price</label>
-                      <input type="number" class="form-control" id="price"  value="<%- property.price %>">
+                      <input type="number" class="form-control" id="price"  >
                     </div>
                     <div style="width: 50%;" class="mb-3">
                       <label for="offer" class="form-label">Offer</label>
-                      <input type="number" class="form-control" id="offer" value="<%- property.offer %>">
+                      <input type="number" class="form-control" id="offer">
                     </div>
                   </div>
 
                   <div class="row">
                     <div style="width: 50%;" class="mb-3">
                       <label for="city" class="form-label">City</label>
-                      <input type="text" class="form-control" id="city" value="<%- property.city %>">
+                      <input type="text" class="form-control" id="city">
                     </div>
 
                     <div style="width: 50%;" class="mb-3">
                       <label for="area" class="form-label">Area</label>
-                      <input type="text" class="form-control" id="area" value="<%- property.area %>">
+                      <input type="text" class="form-control" id="area">
                     </div>
 
                   </div>
@@ -70,15 +70,15 @@
                   <div class="row">
                     <div style="width: 50%;" class="mb-3">
                       <label for="address" class="form-label">Address</label>
-                      <input type="text" class="form-control" id="address" value="<%- property.address %>">
+                      <input type="text" class="form-control" id="address">
                     </div>
                     <div style="width: 50%;" class="mb-3">
                       <label for="type" class="form-label">Type</label>
                       <select class="form-control" id="type">
-                        <option value="apartment" <%- property.type === 'apartment'? 'selected': ''%>>Apartment</option>
-                        <option value="house" <%- property.type === 'house'? 'selected': ''%>>House</option>
-                        <option value="villa" <%- property.type === 'villa'? 'selected': ''%>>Villa</option>
-                        <option value="office" <%- property.type === 'office'? 'selected': ''%>>Office</option>
+                        <option value="apartment" >Apartment</option>
+                        <option value="house">House</option>
+                        <option value="villa">Villa</option>
+                        <option value="office">Office</option>
                       </select>
                     </div>
                   </div>
@@ -86,33 +86,33 @@
                   <div class="row">
                     <div style="width: 33%;" class="mb-3">
                       <label for="rooms" class="form-label">Rooms</label>
-                      <input type="text" class="form-control" id="rooms" value="<%- property.rooms %>">
+                      <input type="text" class="form-control" id="rooms">
                     </div>
                     <div style="width: 33%;" class="mb-3">
                       <label for="salary" class="form-label">Bathrooms</label>
-                      <input type="number" class="form-control" id="bathrooms" value="<%- property.bathrooms %>">
+                      <input type="number" class="form-control" id="bathrooms">
                     </div>
                     <div style="width: 34%;" class="mb-3">
                       <label for="salary" class="form-label">Balaconies</label>
-                      <input type="number" class="form-control" id="balconies" value="<%- property.balconies %>">
+                      <input type="number" class="form-control" id="balconies">
                     </div>
                   </div>
 
                   <div class="row">
                     <div style="width: 33%;" class="mb-3">
                       <label for="rooms" class="form-label">Square Meters</label>
-                      <input type="text" class="form-control" id="squareMeters" value="<%- property.squareMeters %>">
+                      <input type="text" class="form-control" id="squareMeters">
                     </div>
                     <div style="width: 33%;" class="mb-3">
                       <label for="salary" class="form-label">Floor</label>
-                      <input type="number" class="form-control" id="floor" value="<%- property.floor %>">
+                      <input type="number" class="form-control" id="floor">
                     </div>
 
                     <div style="width: 34%;" class="mb-3">
                       <label for="martial-state" class="form-label">Duplex</label>
                       <select class="form-control" id="duplex">
-                        <option value="true" <%- property.duplex ? 'selected': ''%>>Duplex</option>
-                        <option value="false" <%- property.duplex? 'selected': ''%>>Normal</option>
+                        <option value="true" >Duplex</option>
+                        <option value="false" >Normal</option>
                       </select>
                     </div>
 
@@ -121,41 +121,20 @@
                   <div class="row">
                     <div style="width: 100%;" class="mb-3">
                       <label for="rooms" class="form-label">Description</label>
-                      <input type="text" class="form-control" id="description" value="<%- property.description %>">
+                      <input type="text" class="form-control" id="description">
                     </div>
                   </div>
 
-                  <button id="dataBtn" class="btn btn-primary">Update Property</button>
-                  <button id="deleteBtn" class="btn btn-primary">Delete Property</button>
-
+                  <button id="dataBtn" class="btn btn-primary">Add Property</button>
                 </form>
                 <p id="message-response" style="display: none; color: red; text-align: center"></p>
 
               </div>
             </div>
 
-            <h5 class="card-title fw-semibold mb-4">User Inquires</h5>
-
-            <% for (let i = 0; i < inquires.length ; i++) { %>
-              <% if (i%3 === 0) { %>
-              <div class="row">
-                <% }%>
-                <div class="card col-lg-4">
-                  <div class="card-body">
-                    <h5 class="card-title"><%- inquires[i].user.name%></h5>
-                    <p class="card-text"><%- inquires[i].message%></p>
-                    <a href="/admin/inquries/<%- inquires[i]._id%>" class="card-link">Go to it</a>
-                  </div>
-                </div>
-                <% if ((i + 1) % 3 === 0 || i === inquires.length - 1) { %>
-              </div>
-              <% } %>
-            <% } %>
 
 
-            <div class="row">
 
-            </div>
 
           </div>
         </div>

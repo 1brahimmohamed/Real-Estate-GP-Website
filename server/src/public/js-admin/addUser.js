@@ -1,20 +1,17 @@
-const form = document.getElementById('user-data')
-const dataBtn = document.getElementById('dataBtn')
+const form = document.getElementById('user-data');
+const addBtn = document.getElementById('add-btn');
 const errorMessage = document.getElementById('message-response')
-const deleteBtn = document.getElementById('deleteBtn')
 
-const setDate = () => {
-    const date = document.getElementById('date').getAttribute('data')
-    let jsDate = new Date(date)
+const validatePassword = (password, passwordConfirm) => {
 
-    const year = jsDate.getFullYear();
-    const month = (jsDate.getMonth() + 1).toString().padStart(2, '0');
-    const day = jsDate.getDate().toString().padStart(2, '0');
+        if (password !== passwordConfirm) {
+            errorMessage.innerText = 'Password and password confirmation must match';
+            errorMessage.style.display = 'block';
+            return false;
+        }
 
-    document.getElementById('date').value = `${year}-${month}-${day}`;
+        return true;
 }
-
-setDate()
 
 const dataValidation = (name
     ,email
@@ -85,13 +82,15 @@ const dataValidation = (name
 }
 
 
+addBtn.addEventListener('click', async (e) => {
 
-dataBtn.addEventListener('click', async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     let name                    = form.elements['name'].value.trim(),
         email                   = form.elements['email'].value.trim(),
         phone                   = form.elements['phone'].value.trim(),
+        password                = form.elements['password'].value.trim(),
+        passwordConfirm         = form.elements['password-confirm'].value.trim(),
         address                 = form.elements['address'].value.trim(),
         nationality             = form.elements['nationality'].value.trim(),
         nationalityId           = form.elements['nationalID'].value.trim(),
@@ -103,22 +102,20 @@ dataBtn.addEventListener('click', async (e) => {
 
 
     let valid = dataValidation(name, email, phone, address, nationality, nationalityId, birthDate, maritalStatus, gender)
+    let validPassword = validatePassword(password, passwordConfirm);
 
 
-
-
-    if (valid) {
-        const url = window.location.href;
-        const id = url.substring(url.lastIndexOf('/') + 1);
-
-        let res = await fetch(`/api/v1/users/${id}`, {
-            method: 'PATCH',
+    if (valid && validPassword) {
+        let res = await fetch('/api/v1/users', {
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 name,
                 email,
+                password,
+                passwordConfirm,
                 phoneNumber: phone,
                 address,
                 nationality,
@@ -134,11 +131,9 @@ dataBtn.addEventListener('click', async (e) => {
         let data = await res.json();
 
         if (data.status === 'success') {
-            errorMessage.style.display = 'none';
-
             Swal.fire({
                 icon: 'success',
-                title: 'Data updated successfully',
+                title: 'User added successfully',
                 showConfirmButton: false,
                 timer: 1500
             })
@@ -147,49 +142,8 @@ dataBtn.addEventListener('click', async (e) => {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: data.message,
+                text: data.message
             })
         }
     }
-
-})
-
-
-deleteBtn.addEventListener('click', async (e) => {
-    e.preventDefault()
-
-    const url = window.location.href;
-    const id = url.substring(url.lastIndexOf('/') + 1);
-
-    Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-    }).then(async (result) => {
-        await fetch(`/api/v1/users/${id}`, {
-            method: 'DELETE',
-        })
-            .then(data =>{
-                console.log(data)
-                if (data.status === 204) {
-                    errorMessage.style.display = 'none';
-
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'User deleted successfully',
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then(() => {
-                        window.location.href = '/admin/users'
-                    })
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: data.message,
-                    })
-                }
-            });
-    })
-})
+});

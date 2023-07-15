@@ -75,5 +75,16 @@ router.get('/admin/inquires/:id',
     viewController.getAdminInquiryPage
 );
 
+router.get('/admin/add-user',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminAddUserPage
+);
+
+router.get('/admin/add-property',
+    authenticationController.protect,
+    authenticationController.restrictTo('admin'),
+    viewController.getAdminAddPropertyPage
+);
 
 module.exports = router;

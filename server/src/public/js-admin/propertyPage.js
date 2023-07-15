@@ -1,6 +1,13 @@
 const form = document.getElementById('property-data')
 const dataBtn = document.getElementById('dataBtn')
 const errorMessage = document.getElementById('message-response')
+const deleteBtn = document.getElementById('deleteBtn')
+
+let add = false;
+
+if (window.location.href.includes('add'))
+    add = true;
+
 
 const propertyDataValidation = (
     name,
@@ -107,7 +114,6 @@ dataBtn.addEventListener('click', async (e) => {
         description = form.elements['description'].value;
 
 
-    console.log(offer, price)
     const valid = propertyDataValidation(
         name,
         slug,
@@ -128,10 +134,20 @@ dataBtn.addEventListener('click', async (e) => {
 
     if (valid) {
         const url = window.location.href;
-        const id = url.substring(url.lastIndexOf('/') + 1);
+        let method, id;
+
+        if (add){
+            id  = ''
+            method = 'POST'
+        }
+        else{
+            id = url.substring(url.lastIndexOf('/') + 1);
+            method = 'PATCH'
+        }
+
 
         let res = await fetch(`/api/v1/properties/${id}`, {
-            method: 'PATCH',
+            method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -162,7 +178,7 @@ dataBtn.addEventListener('click', async (e) => {
 
                     Swal.fire({
                         icon: 'success',
-                        title: 'Data updated successfully',
+                        title: `${add? 'Added' : 'Updated'} successfully`,
                         showConfirmButton: false,
                         timer: 1500
                     })
@@ -178,3 +194,45 @@ dataBtn.addEventListener('click', async (e) => {
 
 
 });
+
+if (deleteBtn){
+
+    deleteBtn.addEventListener('click', async (e) => {
+        e.preventDefault()
+
+        const url = window.location.href;
+        const id = url.substring(url.lastIndexOf('/') + 1);
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+        }).then(async (result) => {
+            await fetch(`/api/v1/properties/${id}`, {
+                method: 'DELETE',
+            })
+                .then(data =>{
+                    console.log(data)
+                    if (data.status === 204) {
+                        errorMessage.style.display = 'none';
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Property deleted successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then(() => {
+                            window.location.href = '/admin/properties'
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: data.message,
+                        })
+                    }
+                });
+        })
+    })
+}
