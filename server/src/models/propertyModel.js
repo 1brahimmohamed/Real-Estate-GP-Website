@@ -105,7 +105,7 @@ const propertySchema = new mongoose.Schema({
 
     ratingAverage: {
         type: Number,
-        default: 0,
+        default: 1,
         min: [1, 'Rating must be above 1.0'],
         max: [5, 'Rating must be below 5.0'],
     },

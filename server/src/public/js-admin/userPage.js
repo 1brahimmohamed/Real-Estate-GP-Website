@@ -1,6 +1,7 @@
 const form = document.getElementById('user-data')
 const dataBtn = document.getElementById('dataBtn')
 const errorMessage = document.getElementById('message-response')
+const deleteBtn = document.getElementById('deleteBtn')
 
 const setDate = () => {
     const date = document.getElementById('date').getAttribute('data')
@@ -151,4 +152,44 @@ dataBtn.addEventListener('click', async (e) => {
         }
     }
 
+})
+
+
+deleteBtn.addEventListener('click', async (e) => {
+    e.preventDefault()
+
+    const url = window.location.href;
+    const id = url.substring(url.lastIndexOf('/') + 1);
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+    }).then(async (result) => {
+        await fetch(`/api/v1/users/${id}`, {
+            method: 'DELETE',
+        })
+            .then(data =>{
+                console.log(data)
+                if (data.status === 204) {
+                    errorMessage.style.display = 'none';
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'User deleted successfully',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = '/admin/users'
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: data.message,
+                    })
+                }
+            });
+    })
 })
