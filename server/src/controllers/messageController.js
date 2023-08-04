@@ -4,7 +4,7 @@ const ErrorHandler = require('../utils/errorHandler');
 
 exports.getAllMessages = asyncErrorCatching(async (req, res, next) => {
 
-    const messages = await Message.find();
+    const messages = await Message.find().sort({ createdAt: 'desc' });
 
     res.status(200).json({
         status: 'success',

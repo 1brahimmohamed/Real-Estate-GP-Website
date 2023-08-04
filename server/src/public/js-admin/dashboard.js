@@ -332,7 +332,7 @@ const viewMessages = async () => {
 
     let messages = await getMessages();
 
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         let date = new Date(messages[i].createdAt);
 
         let container = document.createElement('li');

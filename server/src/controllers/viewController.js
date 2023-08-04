@@ -38,7 +38,6 @@ exports.getHomePage = asyncErrorCatching(async (req, res, next) => {
             'website/index',
             {
                 pageTitle: `${commonData.pageTitlesBase} | Home`,
-
                 properties,
                 aboutUs: aboutUsSection
             }
